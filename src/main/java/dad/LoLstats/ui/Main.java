@@ -1,4 +1,4 @@
-package dad.LoLstats;
+package dad.LoLstats.ui;
 
 public class Main {
 

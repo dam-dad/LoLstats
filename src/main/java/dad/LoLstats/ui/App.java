@@ -1,4 +1,4 @@
-package dad.LoLstats;
+package dad.LoLstats.ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
