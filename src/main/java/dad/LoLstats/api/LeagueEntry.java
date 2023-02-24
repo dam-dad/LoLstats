@@ -5,6 +5,9 @@ public class LeagueEntry {
     private String tier;
     private String rank;
     private int leaguePoints;
+    private int wins;
+    private int losses;
+    
     public String getQueueType() {
         return queueType;
     }
@@ -28,6 +31,18 @@ public class LeagueEntry {
     }
     public void setLeaguePoints(int leaguePoints) {
         this.leaguePoints = leaguePoints;
+    }
+    public int getWins() {
+        return wins;
+    }
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+    public int getLosses() {
+        return losses;
+    }
+    public void setLosses(int losses) {
+        this.losses = losses;
     }
     
 }

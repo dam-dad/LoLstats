@@ -1,15 +1,32 @@
+
 package dad.LoLstats.api;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Champion {
-    
-    private String type;
 
-    public String getType() {
-        return type;
+    @SerializedName("first")
+    @Expose
+    private Boolean first;
+    @SerializedName("kills")
+    @Expose
+    private Integer kills;
+
+    public Boolean getFirst() {
+        return first;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setFirst(Boolean first) {
+        this.first = first;
     }
-    
+
+    public Integer getKills() {
+        return kills;
+    }
+
+    public void setKills(Integer kills) {
+        this.kills = kills;
+    }
+
 }

@@ -13,11 +13,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MatchService {
-    private static final String BASE_URL = "https://europe.api.riotgames.com/lol/";
+    private static String BASE_URL = "https://europe.api.riotgames.com/lol/";
     private Gson gson = new Gson();
     private LoLInterface service;
     private String API_KEY;
-    public MatchService(String API_KEY){
+    public MatchService(String API_KEY, String region){
+
+        BASE_URL = String.format("https://%S.api.riotgames.com/lol/", region);
 
         this.API_KEY = API_KEY;
 
@@ -45,12 +47,12 @@ public class MatchService {
         return history;
     }
 
-    public Match getGame(String matchID) throws Exception{
-        Response<Match> response = service
+    public GameInfo getGame(String matchID) throws Exception{
+        Response<GameInfo> response = service
                 .getGame(matchID, API_KEY)
                 .execute();
         assertResponse(response);
-        Match match = response.body();
+        GameInfo match = response.body();
         return match;
     }
 

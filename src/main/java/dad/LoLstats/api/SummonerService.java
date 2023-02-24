@@ -14,12 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SummonerService {
     
-    private static final String BASE_URL = "https://euw1.api.riotgames.com/lol/";
+    private String BASE_URL = "https://euw1.api.riotgames.com/lol/";
     private Gson gson = new Gson();
     private LoLInterface service;
     private String API_KEY;
-    public SummonerService(String API_KEY){
+    public SummonerService(String API_KEY, String region){
 
+        BASE_URL = String.format("https://%s.api.riotgames.com/lol/", region);
+        System.out.println(BASE_URL);
         this.API_KEY = API_KEY;
 
         ConnectionPool pool = new ConnectionPool(1,5,TimeUnit.SECONDS);

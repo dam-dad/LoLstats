@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane id="root" fx:id="view" hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="440.0" stylesheets="@../css/gameWonStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="100.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="90.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="200.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="-Infinity" prefHeight="120.0" vgrow="NEVER" />
+    <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+  </rowConstraints>
+   <children>
+      <HBox fx:id="itemsBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <children>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item0" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item1" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item2" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item3" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item4" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item5" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="item6" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+      <HBox fx:id="spellsContainer" alignment="CENTER" GridPane.columnIndex="2">
+         <children>
+            <VBox fx:id="runesBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0">
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+                     <children>
+                        <ImageView fx:id="rune1" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+                     <children>
+                        <ImageView fx:id="rune2" fitHeight="20.0" fitWidth="20.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+            <VBox fx:id="summsBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0">
+               <opaqueInsets>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </opaqueInsets>
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+                     <children>
+                        <ImageView fx:id="summoner1" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: black;">
+                     <children>
+                        <ImageView fx:id="summoner2" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <VBox fx:id="infoBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <VBox fx:id="kdaBox" alignment="CENTER" prefHeight="48.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="kdaLabel" alignment="CENTER" prefHeight="17.0" prefWidth="112.0" text="KDA">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="kdaPropLabel" text="Label" />
+                     </children>
+                  </VBox>
+                  <HBox fx:id="csBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <Label fx:id="csLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="CS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <Label id="gmode" fx:id="gameModeLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="135.0" text="GAMEMODE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="timeLabel" text="TIMEWASTED" />
+         </children>
+      </VBox>
+      <ImageView fx:id="champView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>
