@@ -1,6 +1,7 @@
 package dad.LoLstats.ui;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import java.io.IOException;
@@ -20,19 +21,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class LoginController implements Initializable{
 
@@ -69,17 +76,16 @@ public class LoginController implements Initializable{
         view.setBackground(new Background(bImage));
        
 
-        String[] servers = {"Brasil","Europa del Norte y Este","Europa del Oeste","Latinoamérica del Norte","Latinoamérica del Sur","América del Norte","Rusia","Oceanía","Japón","Turquía","Corea"};
+        String[] servers = {"Brassil","North & East Europe","West Europe","North Latin America","South Latin America","North America","Russia","Oceania","Japan","Turkey","Corea"};
 
         serverSelector.getItems().addAll(servers);
         serverSelector.setValue("Server");
         title.setFont(Font.loadFont(getClass().getResourceAsStream("/font/Friz Quadrata Regular.ttf"), 80));
-
         setApiKey();
     }
 
     @FXML private void getUser(){
-
+        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/unavailable.png"))));
         String region = getRegion();
 
         try {
@@ -95,6 +101,7 @@ public class LoginController implements Initializable{
 
 
         } catch (Exception e) {
+            view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"))));
             Alert alerta = new Alert(AlertType.ERROR);
             alerta.setTitle("ERROR");
             alerta.setContentText(e.getMessage());
@@ -104,38 +111,37 @@ public class LoginController implements Initializable{
     }
 
     private String getRegion() {
-    
         String retorno;
         switch (serverSelector.getValue()) {
-            case "Europa del Oeste":
+            case "West Europe":
                 retorno = "euw1";
                 break;
         
-            case "América del Norte":
+            case "North America":
                 retorno = "na1";
                 break;
             
-            case "Latinoamérica del Norte":
+            case "North Latin America":
                 retorno = "la1";
                 break;
             
-            case "Latinoamérica del Sur":
+            case "South Latin America":
                 retorno = "la2";
                 break;
 
-            case "Oceanía":
+            case "Oceania":
                 retorno = "oce";
                 break;
 
-            case "Europa del Norte y Este":
+            case "North & South Europe":
                 retorno = "eun1";
                 break;
 
-            case "Rusia":
+            case "Russia":
                 retorno = "ru1";
                 break;
 
-            case "Turquía":
+            case "Turkey":
                 retorno = "tr1";
                 break;
 
@@ -147,7 +153,7 @@ public class LoginController implements Initializable{
                 retorno = "br1";
                 break;
 
-            case "Japón":
+            case "Japan":
                 retorno = "jp1";
                 break;
 
@@ -161,31 +167,44 @@ public class LoginController implements Initializable{
 
 
     private void setApiKey(){
-        TextInputDialog dialog = new TextInputDialog();
+
         try{
-        Hyperlink link = new Hyperlink("aquí");
-        link.setOnAction(e -> {
-            try {
-                goToApi(e);
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            } catch (URISyntaxException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        });
-        dialog.setTitle("INSERTA LA API KEY");
-        dialog.setContentText("Si no sabes cómo obtener la tuya pincha " + link.getText());
-        Optional<String> datosRecogidos = dialog.showAndWait();
-        App.API_KEY = datosRecogidos.get();
-    } catch (NoSuchElementException e1) {
-        System.exit(1);;
-    }
-    }
+        TextInputDialog dialog = new TextInputDialog();
+            dialog.getDialogPane().getButtonTypes().clear();
+            
+            ImageView dView = new ImageView(new Image(getClass().getResourceAsStream("/images/key-icon.png")));
+            dView.setFitWidth(120);
+            dView.setFitHeight(60);
+            dialog.setGraphic(dView);
 
-    private void goToApi(ActionEvent e) throws IOException, URISyntaxException{
-        java.awt.Desktop.getDesktop().browse(new URI("https://www.developer.riotgames.com"));
-    }
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(dView.getImage());
+            final ButtonType apiType = new ButtonType("GET",ButtonData.YES);
+            ButtonType continuar = new ButtonType("CONTINUE", ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(apiType,continuar,ButtonType.CANCEL);
+            Button goApiButton = (Button) dialog.getDialogPane().lookupButton(apiType);
 
+            // Create an event filter that consumes the action if the text is empty
+            EventHandler<ActionEvent> filter = event -> {
+                try {
+                    java.awt.Desktop.getDesktop().browse(new URI("https://developer.riotgames.com"));
+                    event.consume();
+                } catch (IOException | URISyntaxException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                    event.consume();
+                }
+            };
+
+            goApiButton.addEventFilter(ActionEvent.ACTION, filter);
+            dialog.setTitle("INSERT API KEY");
+            dialog.setContentText("If you don't know how to get it just click in the button below.");
+            Optional<String> datosRecogidos = dialog.showAndWait();
+            App.API_KEY = datosRecogidos.get();
+        } catch(NoSuchElementException e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 }
+

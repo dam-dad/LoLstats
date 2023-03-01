@@ -9,6 +9,7 @@ import dad.LoLstats.api.SummonerService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class App extends Application{
 
@@ -23,6 +24,7 @@ public class App extends Application{
         stage.setScene(new Scene(l.getView()));
         stage.setWidth(800);
         stage.setHeight(576);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage.show();
 
     }

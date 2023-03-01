@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_0.jpg");
+    -fx-background-image: url("/images/Kaisa_0.jpg");
     -fx-background-repeat: no-repeat; 
     -fx-background-size: 1024 576; 
     -fx-background-position: center center;

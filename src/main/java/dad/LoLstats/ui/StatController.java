@@ -17,10 +17,12 @@ import dad.LoLstats.api.MatchService;
 import dad.LoLstats.api.Summoner;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.FocusModel;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -28,6 +30,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -43,6 +46,8 @@ public class StatController implements Initializable{
     @FXML private PieChart winrateChart;
 
     @FXML private ListView<GridPane> gamesView;
+
+    @FXML private Button pdfButton, calcButton;
 
     private Summoner summoner;
 
@@ -115,16 +120,23 @@ public class StatController implements Initializable{
 
     public void initialize(URL location, ResourceBundle resources){
         view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true)));
-        
-        App.stage.setMinWidth(view.getMinWidth()+10);
-        App.stage.setMinHeight(view.getMinHeight());
 
-            App.stage.setResizable(true);
-            
-            profilePicView.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/profileicon/%s.png",summoner.getProfileIconId()))));
+        App.stage.setResizable(true);
+        ImageView calcIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/calc-icon.png")));
+        calcIcon.setFitHeight(60);
+        calcIcon.setFitWidth(60);
+
+        ImageView pdfIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/pdf-icon.png")));
+        pdfIcon.setFitHeight(60);
+        pdfIcon.setFitWidth(60);
+
+        calcButton.setGraphic(calcIcon);
+        pdfButton.setGraphic(pdfIcon);
+        
+        profilePicView.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/profileicon/%s.png",summoner.getProfileIconId()))));
 
             playerNameLabel.setText(summoner.getName());
-            playerLevelLabel.setText("nivel " + summoner.getSummonerLevel());
+            playerLevelLabel.setText("Level " + summoner.getSummonerLevel());
             
             if(elos.size()>0){
                 int cont = 0;
@@ -189,11 +201,11 @@ public class StatController implements Initializable{
             }
             
             ObservableList<GridPane> partidasToList = FXCollections.observableArrayList(partidas);
-            gamesView.getStylesheets().clear();
-            gamesView.getStylesheets().add("/css/gameWonStyle.css");
             gamesView.getSelectionModel().setSelectionMode(null);
             gamesView.setItems(partidasToList);
+            gamesView.setPadding(new Insets(0, 0, 0, 0));
             gamesView.setFocusModel(null);
+            gamesView.setBorder(Border.EMPTY);
             gamesView.setFocusTraversable(false);
             gamesView.setCellFactory(new Callback<ListView<GridPane>,ListCell<GridPane>>() {
     
@@ -204,12 +216,25 @@ public class StatController implements Initializable{
                                     @Override
                                     public void updateItem(GridPane game, boolean empty) {
                                         super.updateItem(game, empty);
-                                        if (empty) {
+                                        
+                                        if (game != null) {
                                             setText(null);
                                             setGraphic(game);
-                                        } else if (game != null) {
-                                            setText(null);
-                                            setGraphic(game);
+                                            for (GameController juego : gList) {
+                                                if(juego.getView().equals(game) && juego.getWin()){
+                                                    getGraphic().setStyle("-fx-background-color: rgb(150, 197, 250);");
+                                                    break;
+                                                }
+                                                else if(juego.getView().equals(game)){
+                                                    getGraphic().setStyle("-fx-background-color: rgb(249, 113, 113);");
+                                                    break;
+                                                }
+                                            }
+                                            setBorder(Border.EMPTY);
+                                            setStyle("-fx-background-color:black;");
+                                            setPadding(new Insets(5, 5, 5, 5));
+                                            setWidth(game.getWidth());
+                                            setHeight(game.getHeight());
                                             setMinHeight(game.getMinHeight());
                                             setMinWidth(game.getMinWidth());
                                             setAlignment(Pos.CENTER);
@@ -224,16 +249,6 @@ public class StatController implements Initializable{
                             
                         });;
 
-                        // for (int i = 0; i< gamesView.getItems().size(); i++) {
-                        //     if(gList.get(i).getView().equals(gamesView.getItems().get(i)))
-                        //         setTheme(gamesView.getItems().get(i), gList.get(i).getWin());
-                        //     else
-                        //         System.out.println("no son iguales");
-                        // }
-
-                        view.getStylesheets().clear();
-                        view.getStylesheets().add("/css/gameWonStyle.css");
-
 
                         view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true)));
                     return null;
@@ -241,25 +256,14 @@ public class StatController implements Initializable{
                 
             };        
             new Thread(task).run();;
+
+            App.stage.setWidth(view.getPrefWidth());
+            App.stage.setHeight(view.getPrefHeight());
+            App.stage.setMinWidth(view.getMinWidth());
+            App.stage.setMinHeight(view.getMinHeight()+35);
             }
         
-    // private void setTheme(GridPane g, boolean win){
-
-    //     if(win){
-    //         g.getStylesheets().clear();
-    //         g.getStylesheets().add("/css/gameWonStyle.css");
-    //         g.setId("root");
-    //     }
-    //     else{
-    //         g.getStylesheets().clear();
-    //         g.getStylesheets().add("/css/gameLostStyle.css");
-    //         g.setId("root");
-    //     }
-
-
-    // }
-
-
+    
     private static double getWinrate(int wins, int losses){
         int partidas = wins + losses;
         double vic = (double)wins/partidas;

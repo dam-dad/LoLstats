@@ -15,7 +15,7 @@
   <columnConstraints>
     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="100.0" />
     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="90.0" />
-      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="200.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="170.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="-Infinity" prefHeight="120.0" vgrow="NEVER" />
@@ -103,31 +103,49 @@
                      <children>
                         <Label fx:id="kdaLabel" alignment="CENTER" prefHeight="17.0" prefWidth="112.0" text="KDA">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="kdaPropLabel" text="Label" />
+                        <Label fx:id="kdaPropLabel" text="Label">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="csLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="CS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Label fx:id="dmgLabel" text="Label">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
-                  <HBox fx:id="csBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-                     <children>
-                        <Label fx:id="csLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="CS" />
-                     </children>
-                  </HBox>
                </children>
             </VBox>
          </children>
       </HBox>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+      <ImageView fx:id="champView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+      <VBox alignment="CENTER">
          <children>
             <Label id="gmode" fx:id="gameModeLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="135.0" text="GAMEMODE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="timeLabel" text="TIMEWASTED" />
+            <Label fx:id="timeLabel" text="TIMEWASTED">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+            <Label fx:id="dateLabel" text="01/01/1970">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
-      <ImageView fx:id="champView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
    </children>
    <padding>
       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />

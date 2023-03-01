@@ -3,7 +3,10 @@ package dad.LoLstats.ui;
 import javafx.fxml.FXML;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +27,7 @@ public class GameController implements Initializable{
 
     @FXML private ImageView champView, summoner1, summoner2, rune1, rune2, item0, item1, item2, item3, item4, item5, item6;
 
-    @FXML private Label gameModeLabel, timeLabel, csLabel, kdaLabel, kdaPropLabel;
+    @FXML private Label gameModeLabel, timeLabel, csLabel, kdaLabel, kdaPropLabel, dateLabel, dmgLabel;
 
     private GameInfo game;
     private Participant player;
@@ -34,7 +37,6 @@ public class GameController implements Initializable{
 
     public GameController(GameInfo game){
         try{
-
             this.game = game;
             FXMLLoader l = new FXMLLoader(getClass().getResource("/fxml/gameView.fxml"));
             l.setController(this);
@@ -64,12 +66,19 @@ public class GameController implements Initializable{
             }
         }
 
-        if(!player.getWin()){
-            view.getStylesheets().clear();
-            view.getStylesheets().add("/css/gameLostStyle.css");
-            view.setId("root");
-            }
+        this.win = player.getWin();
         
+
+        String fecha = Date.from(Instant.ofEpochMilli(game.getInfo().getGameEndTimestamp())).toString();
+        
+        String[] fechaValues = fecha.split(" ");
+
+        dateLabel.setText(String.format("%s/%d/%s",fechaValues[2],getMonth(fechaValues[1]),fechaValues[5]));
+        
+        System.out.println(fecha);
+
+        dmgLabel.setText(player.getTotalDamageDealt() + "DMG");
+
         champView.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/champion/%s.png",player.getChampionName()))));
 
         gameModeLabel.setText(getGameMode());
@@ -103,6 +112,55 @@ public class GameController implements Initializable{
         rune2.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/runes/%s.png", player.getPerks().getStyles().get(1).getStyle()))));
 
         
+    }
+
+    private int getMonth(String string) {
+        int month;
+        switch (string) {
+            case "Jan":
+                month = 1;
+                break;
+            case "Feb":
+                month = 2;
+                break;
+            case "Mar":
+                month = 3;
+                break;
+            case "Apr":
+                month = 4;
+                break;
+            case "May":
+                month = 5;
+                break;
+            case "Jun":
+                month = 6;
+                break;
+            case "Jul":
+                month = 7;
+                break;
+            case "Aug":
+                month = 8;
+                break;
+            case "Sep":
+                month = 9;
+                break;
+            case "Oct":
+                month = 10;
+                break;
+            case "Nov":
+                month = 11;
+                break;
+            case "Dec":
+                month = 12;
+                break;
+            
+            
+                default:
+                month = 0;
+                break;
+        }
+
+        return month;
     }
 
     private String getTime() {
@@ -149,10 +207,10 @@ public class GameController implements Initializable{
                 out = "COOP INTERMEDIATE";
                 break;
             case 400:
-                out = "NORMAL DRAFT PICK";
+                out = "NORMAL DRAFT";
                 break;
             case 430:
-                out = "NORMAL BLIND PICK";
+                out = "NORMAL BLIND";
                 break;
 
             default:
