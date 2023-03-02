@@ -10,4 +10,8 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 LoLstats.jar
-LoLstats1.0.exe
+LoLstats*.exe
+.settings
+.classpath
+.project
+.vscode
