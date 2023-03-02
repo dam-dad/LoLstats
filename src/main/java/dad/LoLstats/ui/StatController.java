@@ -1,7 +1,5 @@
 package dad.LoLstats.ui;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -9,9 +7,9 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-import dad.LoLstats.api.GameInfo;
 import dad.LoLstats.api.LeagueEntry;
 import dad.LoLstats.api.MatchService;
 import dad.LoLstats.api.Summoner;
@@ -20,14 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
-import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.FocusModel;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
@@ -52,6 +48,8 @@ public class StatController implements Initializable{
     private Summoner summoner;
 
     private ArrayList<LeagueEntry> elos;
+
+    private LeagueEntry rankedEntry;
 
     private String region;
 
@@ -147,7 +145,7 @@ public class StatController implements Initializable{
                     }
                 }
     
-                LeagueEntry rankedEntry = elos.get(cont);
+                rankedEntry = elos.get(cont);
                 eloLabel.setText(rankedEntry.getTier() + " " + rankedEntry.getRank() + " " + rankedEntry.getLeaguePoints() + "LP");
                 eloView.setImage(new Image(getClass().getResourceAsStream(String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
         
@@ -176,7 +174,6 @@ public class StatController implements Initializable{
                 @Override
                 protected Void call() throws Exception {
                     
-                    view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/unavailable.png"),128,128,true,true)));
                     ArrayList<GridPane> partidas = new ArrayList<>();
                     ArrayList<GameController> gList = new ArrayList<>();
             
@@ -209,61 +206,71 @@ public class StatController implements Initializable{
             gamesView.setFocusTraversable(false);
             gamesView.setCellFactory(new Callback<ListView<GridPane>,ListCell<GridPane>>() {
     
-                            @Override
-                            public ListCell<GridPane> call(ListView<GridPane> param) {
-                                // TODO Auto-generated method stub
-                                return new ListCell<>(){
-                                    @Override
-                                    public void updateItem(GridPane game, boolean empty) {
-                                        super.updateItem(game, empty);
+                @Override
+                public ListCell<GridPane> call(ListView<GridPane> param) {
+                    return new ListCell<>(){
+                        @Override
+                        public void updateItem(GridPane game, boolean empty) {
+                            super.updateItem(game, empty);
                                         
-                                        if (game != null) {
-                                            setText(null);
-                                            setGraphic(game);
-                                            for (GameController juego : gList) {
-                                                if(juego.getView().equals(game) && juego.getWin()){
-                                                    getGraphic().setStyle("-fx-background-color: rgb(150, 197, 250);");
-                                                    break;
-                                                }
-                                                else if(juego.getView().equals(game)){
-                                                    getGraphic().setStyle("-fx-background-color: rgb(249, 113, 113);");
-                                                    break;
-                                                }
-                                            }
-                                            setBorder(Border.EMPTY);
-                                            setStyle("-fx-background-color:black;");
-                                            setPadding(new Insets(5, 5, 5, 5));
-                                            setWidth(game.getWidth());
-                                            setHeight(game.getHeight());
-                                            setMinHeight(game.getMinHeight());
-                                            setMinWidth(game.getMinWidth());
-                                            setAlignment(Pos.CENTER);
-                                            
-                                        } else {
-                                            setText("null");
-                                            setGraphic(null);
-                                        }
+                            if (game != null) {
+                                setText(null);
+                                setGraphic(game);
+                                for (GameController juego : gList) {
+                                    if(juego.getView().equals(game) && juego.getWin()){
+                                        // getGraphic().setStyle("-fx-background-color: rgb(150, 197, 250);");
+                                        getGraphic().setId("wonGame");
+                                        break;
+                                    }
+                                    else if(juego.getView().equals(game)){
+                                        // getGraphic().setStyle("-fx-background-color: rgb(249, 113, 113);");
+                                        getGraphic().setId("lostGame");
+                                        break;
+                                    }
+                                }
+                                    setBorder(Border.EMPTY);
+                                    setStyle("-fx-background-color:black;");
+                                    setPadding(new Insets(5, 5, 5, 5));
+                                    setWidth(game.getWidth());
+                                    setHeight(game.getHeight());
+                                    setMinHeight(game.getMinHeight());
+                                    setMinWidth(game.getMinWidth());
+                                    setAlignment(Pos.CENTER);
+                            }
+                            else {
+                                    setText("null");
+                                    setGraphic(null);
+                            }
                                     }
                                 };
-                            }
+                        }
                             
                         });;
-
-
-                        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true)));
                     return null;
                 }
                 
             };        
             new Thread(task).run();;
 
-            App.stage.setWidth(view.getPrefWidth());
+            App.stage.setWidth(view.getPrefWidth()+40);
             App.stage.setHeight(view.getPrefHeight());
-            App.stage.setMinWidth(view.getMinWidth());
+            App.stage.setMinWidth(view.getMinWidth()+40);
             App.stage.setMinHeight(view.getMinHeight()+35);
             }
         
+    @FXML private void calcOnClick(){
+        if(Objects.isNull(App.calcScene))
+        App.calcScene = new Scene(new CalcController(summoner,rankedEntry).getView());
+        if(Objects.isNull(App.statScene))
+        App.statScene = new Scene(this.getView());
+        App.stage.setScene(App.calcScene);
+        App.stage.setWidth(655);
+        App.stage.setHeight(550);
+        App.stage.setResizable(false);
+        App.stage.show();
+    }
     
+
     private static double getWinrate(int wins, int losses){
         int partidas = wins + losses;
         double vic = (double)wins/partidas;

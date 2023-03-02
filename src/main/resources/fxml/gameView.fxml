@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane id="root" fx:id="view" hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="440.0" stylesheets="@../css/gameWonStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane id="root" fx:id="view" hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="440.0" vgap="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="100.0" />
-    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="90.0" />
-      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="170.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="120.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="80.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="180.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="-Infinity" prefHeight="120.0" vgrow="NEVER" />
@@ -110,17 +111,21 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                            <children>
                               <Label fx:id="csLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="CS">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="dmgLabel" text="Label">
+                              <Label fx:id="dmgLabel" prefHeight="20.0" prefWidth="70.0" text="Label">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font size="13.0" />
                                  </font></Label>
+                              <ProgressBar fx:id="dmgBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="80.0" progress="0.04" />
                            </children>
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                           </padding>
                         </VBox>
                      </children>
                   </VBox>
@@ -148,6 +153,6 @@
       </VBox>
    </children>
    <padding>
-      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
 </GridPane>

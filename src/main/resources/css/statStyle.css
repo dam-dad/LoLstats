@@ -27,3 +27,11 @@
 Button{
     -fx-background-color: yellow;
 }
+
+#wonGame{
+    -fx-background-color: rgb(150, 197, 250);
+}
+
+#lostGame{
+    -fx-background-color: rgb(249, 113, 113);
+}

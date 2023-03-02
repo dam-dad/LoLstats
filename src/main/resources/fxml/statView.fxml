@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="root" fx:id="view" minHeight="500.0" minWidth="700.0" prefHeight="520.0" prefWidth="700.0" stylesheets="@../css/statStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="root" fx:id="view" minHeight="500.0" minWidth="645.0" prefHeight="520.0" prefWidth="645.0" stylesheets="@../css/statStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="127.0" prefWidth="500.0" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -24,7 +24,7 @@
                      </image>
                   </ImageView>
                </children></VBox>
-            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="582.0">
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="536.0">
                <children>
                   <Label fx:id="playerNameLabel" text="playerName">
                      <font>
@@ -56,10 +56,10 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Button fx:id="pdfButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" textFill="#eaff00" />
-                  <Button fx:id="calcButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" />
+                  <Button fx:id="calcButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#calcOnClick" prefHeight="80.0" prefWidth="80.0" />
                </children>
             </HBox>
-            <VBox id="left-item" alignment="CENTER" prefHeight="80.0" prefWidth="179.0" stylesheets="@../css/statStyle.css">
+            <VBox id="left-item" alignment="CENTER" prefHeight="80.0" prefWidth="180.0" stylesheets="@../css/statStyle.css">
                <children>
                   <Label text="RANK">
                      <font>
@@ -110,7 +110,7 @@
       </VBox>
    </left>
    <center>
-      <ListView id="list" fx:id="gamesView" prefHeight="200.0" BorderPane.alignment="TOP_LEFT">
+      <ListView id="list" fx:id="gamesView" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="441.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin></ListView>

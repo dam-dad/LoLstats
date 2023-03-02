@@ -24,7 +24,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -37,7 +36,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -97,7 +95,8 @@ public class LoginController implements Initializable{
             ArrayList<LeagueEntry> elos = summService.getElos(summoner.getId());
             App.summoner = summoner;
             StatController stat = new StatController(elos, region);
-            App.stage.setScene(new Scene(stat.getView()));
+            App.statScene = new Scene(stat.getView());
+            App.stage.setScene(App.statScene);
 
 
         } catch (Exception e) {
@@ -167,7 +166,6 @@ public class LoginController implements Initializable{
 
 
     private void setApiKey(){
-
         try{
         TextInputDialog dialog = new TextInputDialog();
             dialog.getDialogPane().getButtonTypes().clear();
@@ -183,8 +181,6 @@ public class LoginController implements Initializable{
             ButtonType continuar = new ButtonType("CONTINUE", ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(apiType,continuar,ButtonType.CANCEL);
             Button goApiButton = (Button) dialog.getDialogPane().lookupButton(apiType);
-
-            // Create an event filter that consumes the action if the text is empty
             EventHandler<ActionEvent> filter = event -> {
                 try {
                     java.awt.Desktop.getDesktop().browse(new URI("https://developer.riotgames.com"));

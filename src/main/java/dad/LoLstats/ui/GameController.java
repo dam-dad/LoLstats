@@ -4,19 +4,17 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import dad.LoLstats.api.GameInfo;
-import dad.LoLstats.api.MatchService;
 import dad.LoLstats.api.Participant;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -28,6 +26,8 @@ public class GameController implements Initializable{
     @FXML private ImageView champView, summoner1, summoner2, rune1, rune2, item0, item1, item2, item3, item4, item5, item6;
 
     @FXML private Label gameModeLabel, timeLabel, csLabel, kdaLabel, kdaPropLabel, dateLabel, dmgLabel;
+
+    @FXML private ProgressBar dmgBar;
 
     private GameInfo game;
     private Participant player;
@@ -55,7 +55,6 @@ public class GameController implements Initializable{
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        
 
         List<Participant> participantes = game.getInfo().getParticipants();
         
@@ -75,10 +74,10 @@ public class GameController implements Initializable{
 
         dateLabel.setText(String.format("%s/%d/%s",fechaValues[2],getMonth(fechaValues[1]),fechaValues[5]));
         
-        System.out.println(fecha);
+        dmgLabel.setText(player.getTotalDamageDealtToChampions() + " DMG");
 
-        dmgLabel.setText(player.getTotalDamageDealt() + "DMG");
-
+        dmgBar.setProgress((double)player.getTotalDamageDealtToChampions()/(double)player.getTotalDamageDealt());
+        System.out.println(dmgBar.getProgress());
         champView.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/champion/%s.png",player.getChampionName()))));
 
         gameModeLabel.setText(getGameMode());
