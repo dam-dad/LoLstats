@@ -43,7 +43,7 @@ public class StatController implements Initializable{
 
     @FXML private ListView<GridPane> gamesView;
 
-    @FXML private Button pdfButton, calcButton;
+    @FXML private Button pdfButton, calcButton, logoutButton;
 
     private Summoner summoner;
 
@@ -130,7 +130,9 @@ public class StatController implements Initializable{
 
         calcButton.setGraphic(calcIcon);
         pdfButton.setGraphic(pdfIcon);
-        
+        logoutButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/logout-icon.png"),32,32,true,true)));
+
+
         profilePicView.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/profileicon/%s.png",summoner.getProfileIconId()))));
 
             playerNameLabel.setText(summoner.getName());
@@ -261,6 +263,8 @@ public class StatController implements Initializable{
     @FXML private void calcOnClick(){
         if(Objects.isNull(App.calcScene))
         App.calcScene = new Scene(new CalcController(summoner,rankedEntry).getView());
+        else if(!this.summoner.equals(CalcController.getSummoner()))
+            App.calcScene = new Scene(new CalcController(summoner, rankedEntry).getView());
         if(Objects.isNull(App.statScene))
         App.statScene = new Scene(this.getView());
         App.stage.setScene(App.calcScene);
@@ -270,6 +274,14 @@ public class StatController implements Initializable{
         App.stage.show();
     }
     
+    @FXML private void loginOnClick(){
+        App.stage.setScene(App.loginScene);
+        App.stage.setWidth(800);
+        App.stage.setHeight(576);
+        App.stage.setResizable(false);
+        App.stage.show();
+    }
+
 
     private static double getWinrate(int wins, int losses){
         int partidas = wins + losses;

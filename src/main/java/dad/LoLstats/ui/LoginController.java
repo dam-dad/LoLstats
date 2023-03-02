@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -66,9 +67,7 @@ public class LoginController implements Initializable{
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true)));
-        App.stage.setResizable(false);
-        
+        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true))); 
 
         BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("/images/Kaisa_0.jpg")), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         view.setBackground(new Background(bImage));
@@ -97,7 +96,13 @@ public class LoginController implements Initializable{
             StatController stat = new StatController(elos, region);
             App.statScene = new Scene(stat.getView());
             App.stage.setScene(App.statScene);
-
+            if(Objects.isNull(App.loginScene))
+                App.loginScene = new Scene(this.getView());
+            else
+                App.loginScene.setRoot(this.view);
+            userInput.setText("");
+            serverSelector.setValue("Server");
+            App.stage.show();
 
         } catch (Exception e) {
             view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"))));
@@ -178,8 +183,9 @@ public class LoginController implements Initializable{
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(dView.getImage());
             final ButtonType apiType = new ButtonType("GET",ButtonData.YES);
-            ButtonType continuar = new ButtonType("CONTINUE", ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(apiType,continuar,ButtonType.CANCEL);
+            ButtonType continuar = new ButtonType("NEXT", ButtonData.OK_DONE);
+            ButtonType cancelar = new ButtonType("CANCEL",ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().addAll(apiType,continuar,cancelar);
             Button goApiButton = (Button) dialog.getDialogPane().lookupButton(apiType);
             EventHandler<ActionEvent> filter = event -> {
                 try {
@@ -193,7 +199,8 @@ public class LoginController implements Initializable{
             };
 
             goApiButton.addEventFilter(ActionEvent.ACTION, filter);
-            dialog.setTitle("INSERT API KEY");
+            dialog.setTitle("API KEY");
+            dialog.setHeaderText("INSERT API KEY");
             dialog.setContentText("If you don't know how to get it just click in the button below.");
             Optional<String> datosRecogidos = dialog.showAndWait();
             App.API_KEY = datosRecogidos.get();

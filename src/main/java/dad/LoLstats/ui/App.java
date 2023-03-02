@@ -18,9 +18,11 @@ public class App extends Application{
         App.stage = stage;
         LoginController l = new LoginController();
         stage.setTitle("LoLstats v1.0");
-        stage.setScene(new Scene(l.getView()));
+        App.loginScene = new Scene(l.getView());
+        stage.setScene(loginScene);
         stage.setWidth(800);
         stage.setHeight(576);
+        stage.setResizable(false);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage.show();
 

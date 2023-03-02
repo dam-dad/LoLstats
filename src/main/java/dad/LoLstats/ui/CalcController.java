@@ -43,8 +43,8 @@ public class CalcController implements Initializable{
     @FXML private HBox eloDeseado;
 
     @FXML private ChoiceBox<Divisiones> divisionDeseadaChoice;
-
-    private Summoner summoner;
+    
+    static Summoner summoner;
 
     private LeagueEntry rankedEntry;
 
@@ -53,7 +53,7 @@ public class CalcController implements Initializable{
 
     public CalcController(Summoner summoner, LeagueEntry rankedEntry){
 
-        this.summoner = summoner;
+        CalcController.summoner = summoner;
         this.rankedEntry = rankedEntry;
 
         try{
@@ -70,10 +70,14 @@ public class CalcController implements Initializable{
         return view;
     }
 
+    public static Summoner getSummoner(){
+        return CalcController.summoner;
+    }
+
     public void initialize(URL location, ResourceBundle resources){
 
         getUser();
-        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursor/normal.png"),128,128,true,true)));
+        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true)));
         backButton.setOnAction(e -> goBack());
 
         ImageView backView = new ImageView(new Image(getClass().getResourceAsStream("/images/back-icon.png")));
