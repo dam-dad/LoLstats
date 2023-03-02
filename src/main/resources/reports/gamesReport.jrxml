@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gamesReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d45165cf-60b6-40c8-ba45-0eaab56c5052">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="540" height="30" uuid="1c7955a4-027f-4069-b852-34271d80f333"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Player's Games Report]]></text>
+			</staticText>
+			<textField pattern="dd,MMMMM, yyyy">
+				<reportElement x="10" y="30" width="290" height="30" uuid="2d5c26ee-04aa-4644-850b-20874f1f4bcc"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="300" y="30" width="250" height="30" uuid="52e8447e-decc-4cd4-81cd-dd0b3bd4e5fa"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="124" splitType="Stretch">
+			<image>
+				<reportElement x="10" y="8" width="90" height="90" uuid="093a9caf-1bc2-4b1b-91ad-41a369750474">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[""]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="290" y="8" width="250" height="30" uuid="edc9c66d-8050-43b3-964c-227d0867e3a8"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[$P{sumName}]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="10" width="164" height="28" uuid="a209c9c3-ad3d-4d8f-93fd-13eeaa21413c"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Summoner's Name: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="38" width="100" height="30" uuid="fd5d6e4e-a935-46a9-80d2-d6526f588777"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Level:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="38" width="250" height="30" uuid="f2659e77-801c-4892-b15c-ea6835f79725"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[$P{sumLvL}]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="70" width="100" height="30" uuid="b550e984-b312-44ad-8f08-988ae242f7c2"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Elo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="70" width="250" height="30" uuid="85f8a5a3-f40e-4dd3-91cd-ee4117ee22ee"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[$P{sumElo}]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<rectangle>
+				<reportElement x="3" y="0" width="549" height="29" backcolor="#030000" uuid="39815032-94bd-432c-a248-6c45198ae8ec"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="0" width="548" height="28" forecolor="#FFFFFF" uuid="795a159c-aab2-4a1f-8737-72e54c7314e8"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Games]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="127" splitType="Stretch">
+			<rectangle>
+				<reportElement x="110" y="3" width="442" height="120" uuid="d333d004-e6ac-4125-ba41-6fa81408112f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="40" width="100" height="30" uuid="6441f347-df1c-476f-9e62-ba84f26c2d32"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Game 1]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="65" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="35" width="100" height="30" uuid="c19dd9c7-10e8-48a4-a2e2-17dc1d6b16f8"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

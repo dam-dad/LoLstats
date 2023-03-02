@@ -46,7 +46,7 @@ public class CalcController implements Initializable{
     
     static Summoner summoner;
 
-    private LeagueEntry rankedEntry;
+    static LeagueEntry rankedEntry;
 
 
     private String selectedElo = "";
@@ -54,7 +54,7 @@ public class CalcController implements Initializable{
     public CalcController(Summoner summoner, LeagueEntry rankedEntry){
 
         CalcController.summoner = summoner;
-        this.rankedEntry = rankedEntry;
+        CalcController.rankedEntry = rankedEntry;
 
         try{
             FXMLLoader l = new FXMLLoader(getClass().getResource("/fxml/viewMain.fxml"));

@@ -37,7 +37,7 @@
             <HBox id="root" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0">
                <children>
                   <ChoiceBox fx:id="serverSelector" prefHeight="26.0" prefWidth="141.0" />
-                  <TextField fx:id="userInput" prefHeight="25.0" prefWidth="219.0" />
+                  <TextField fx:id="userInput" prefHeight="25.0" prefWidth="219.0" promptText="Insert user to search" />
                   <JFXButton onAction="#getUser" prefHeight="24.0" prefWidth="54.0" text="Search">
                      <font>
                         <Font name="System Bold" size="12.0" />

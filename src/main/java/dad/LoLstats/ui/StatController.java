@@ -4,9 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -30,6 +34,13 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class StatController implements Initializable{
 
@@ -52,6 +63,10 @@ public class StatController implements Initializable{
     private LeagueEntry rankedEntry;
 
     private String region;
+
+    public static String eloValue;
+
+    private ArrayList<GameController> gList;
 
     public StatController(ArrayList<LeagueEntry> elos, String region){
         try{
@@ -130,6 +145,15 @@ public class StatController implements Initializable{
 
         calcButton.setGraphic(calcIcon);
         pdfButton.setGraphic(pdfIcon);
+        pdfButton.setOnAction(e -> {
+            try {
+                pdfOnClick();
+            } catch (JRException | IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
+
         logoutButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/logout-icon.png"),32,32,true,true)));
 
 
@@ -148,7 +172,8 @@ public class StatController implements Initializable{
                 }
     
                 rankedEntry = elos.get(cont);
-                eloLabel.setText(rankedEntry.getTier() + " " + rankedEntry.getRank() + " " + rankedEntry.getLeaguePoints() + "LP");
+                eloValue = rankedEntry.getTier() + " " + rankedEntry.getRank() + " " + rankedEntry.getLeaguePoints() + "LP";
+                eloLabel.setText(eloValue);
                 eloView.setImage(new Image(getClass().getResourceAsStream(String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
         
                 ObservableList<PieChart.Data> piechartData = FXCollections.observableArrayList(
@@ -177,27 +202,26 @@ public class StatController implements Initializable{
                 protected Void call() throws Exception {
                     
                     ArrayList<GridPane> partidas = new ArrayList<>();
-                    ArrayList<GameController> gList = new ArrayList<>();
+                    gList = new ArrayList<>();
             
-            try {
+                try {
                         
-                MatchService mService = new MatchService(App.API_KEY, region);
-                        
-                ArrayList<String> gameIds = mService.getGames(summoner.getPuuid(), App.API_KEY);
-                
-                for (String s : gameIds) {
-                            GameController g = new GameController(mService.getGame(s));
-                            if(g.getWin())
-                                g.getView().setId("gameWon");
-                            else
-                                g.getView().setId("gameLost");
-                            gList.add(g);
-                            partidas.add(g.getView());
+                    MatchService mService = new MatchService(App.API_KEY, region);
+                            
+                    ArrayList<String> gameIds = mService.getGames(summoner.getPuuid(), App.API_KEY);
+                    
+                    for (String s : gameIds) {
+                                GameController g = new GameController(mService.getGame(s));
+                                if(g.getWin())
+                                    g.getView().setId("gameWon");
+                                else
+                                    g.getView().setId("gameLost");
+                                gList.add(g);
+                                partidas.add(g.getView());
+                    }
+                } catch (Exception e) {            
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                                
-                e.printStackTrace();
-            }
             
             ObservableList<GridPane> partidasToList = FXCollections.observableArrayList(partidas);
             gamesView.getSelectionModel().setSelectionMode(null);
@@ -220,12 +244,10 @@ public class StatController implements Initializable{
                                 setGraphic(game);
                                 for (GameController juego : gList) {
                                     if(juego.getView().equals(game) && juego.getWin()){
-                                        // getGraphic().setStyle("-fx-background-color: rgb(150, 197, 250);");
                                         getGraphic().setId("wonGame");
                                         break;
                                     }
                                     else if(juego.getView().equals(game)){
-                                        // getGraphic().setStyle("-fx-background-color: rgb(249, 113, 113);");
                                         getGraphic().setId("lostGame");
                                         break;
                                     }
@@ -243,14 +265,13 @@ public class StatController implements Initializable{
                                     setText("null");
                                     setGraphic(null);
                             }
-                                    }
-                                };
                         }
-                            
-                        });;
-                    return null;
+                    };
                 }
-                
+                            
+            });
+            return null;
+            }
             };        
             new Thread(task).run();;
 
@@ -281,6 +302,25 @@ public class StatController implements Initializable{
         App.stage.setResizable(false);
         App.stage.show();
     }
+
+    @FXML public static void pdfOnClick() throws JRException, IOException{
+        
+        
+        JasperReport report = JasperCompileManager.compileReport(StatController.class.getResourceAsStream("/reports/gamesReport.jrfxml"));
+        System.out.println("clicked");
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        parameters.put("sumName", App.summoner.getName());
+        parameters.put("sumLvL", App.summoner.getSummonerLevel());
+        parameters.put("sumElo", StatController.eloValue);
+
+        JasperPrint print = JasperFillManager.fillReport(report, parameters);
+
+        JasperExportManager.exportReportToPdfFile(print, "pdf/gamePDF.pdf");
+
+        java.awt.Desktop.getDesktop().open(new File("pdf/gamePDF.pdf"));
+    }
+
 
 
     private static double getWinrate(int wins, int losses){

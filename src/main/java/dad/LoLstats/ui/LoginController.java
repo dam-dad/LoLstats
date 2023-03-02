@@ -82,7 +82,6 @@ public class LoginController implements Initializable{
     }
 
     @FXML private void getUser(){
-        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/unavailable.png"))));
         String region = getRegion();
 
         try {
