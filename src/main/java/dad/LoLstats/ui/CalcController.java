@@ -27,76 +27,95 @@ import dad.LoLstats.objs.*;
 import dad.LoLstats.api.LeagueEntry;
 import dad.LoLstats.api.Summoner;
 import dad.LoLstats.exceptions.*;
+/***
+ * Controller for the CalcScene.
+ * Gets the data given from {@link dad.LoLstats.ui.StatController} and calculates the wins needed for a greater elo.  
+ * @author katarem
+ * @version 1.0 March 3rd 2023
+ */
+public class CalcController implements Initializable {
 
-public class CalcController implements Initializable{
+    @FXML
+    private Pane view;
 
-    @FXML private Pane view;
+    @FXML
+    private TextField userInput, lpsLabel;
 
-    @FXML private TextField userInput, lpsLabel;
+    @FXML
+    private ImageView profilePic, eloIcon;
 
-    @FXML private ImageView profilePic, eloIcon;
+    @FXML
+    private Label userAccountLabel, userDataLabel, errorLabel, resultadoLabel;
 
-    @FXML private Label userAccountLabel, userDataLabel, errorLabel, resultadoLabel;
+    @FXML
+    private Button backButton;
 
-    @FXML private Button backButton;
+    @FXML
+    private HBox eloDeseado;
 
-    @FXML private HBox eloDeseado;
+    @FXML
+    private ChoiceBox<Divisiones> divisionDeseadaChoice;
 
-    @FXML private ChoiceBox<Divisiones> divisionDeseadaChoice;
-    
     static Summoner summoner;
 
     static LeagueEntry rankedEntry;
 
-
     private String selectedElo = "";
 
-    public CalcController(Summoner summoner, LeagueEntry rankedEntry){
+    public CalcController(Summoner summoner, LeagueEntry rankedEntry) {
 
         CalcController.summoner = summoner;
         CalcController.rankedEntry = rankedEntry;
 
-        try{
+        try {
             FXMLLoader l = new FXMLLoader(getClass().getResource("/fxml/viewMain.fxml"));
-            
+
             l.setController(this);
             l.load();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Pane getView(){
+    public Pane getView() {
         return view;
     }
-
-    public static Summoner getSummoner(){
+    /***
+     * @return summoner the last summoner that has been searched.
+     */
+    public static Summoner getSummoner() {
         return CalcController.summoner;
     }
 
-    public void initialize(URL location, ResourceBundle resources){
-
+    public void initialize(URL location, ResourceBundle resources) {
+        //Getting user data
         getUser();
-        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true)));
-        backButton.setOnAction(e -> goBack());
 
+        //Styling
+        view.setCursor(new ImageCursor(
+                new Image(getClass().getResourceAsStream("/cursors/normal.png"), 128, 128, true, true)));
+                
         ImageView backView = new ImageView(new Image(getClass().getResourceAsStream("/images/back-icon.png")));
         backView.setFitHeight(32);
         backView.setFitWidth(32);
-
         backButton.setGraphic(backView);
+                
+        //Setting the returning button
+        backButton.setOnAction(e -> goBack());
 
-
-        String[] lista = {"iron.png","bronze.png","silver.png","gold.png","platinum.png","diamond.png","master.png","grandmaster.png","challenger.png"};
+        //Preparing the elo icons and their handler to work as animated buttons
+        String[] lista = { "iron.png", "bronze.png", "silver.png", "gold.png", "platinum.png", "diamond.png",
+                "master.png", "grandmaster.png", "challenger.png" };
         for (int i = 0; i < lista.length; i++) {
-            ImageView e1 = (ImageView)eloDeseado.getChildren().get(i);
+            ImageView e1 = (ImageView) eloDeseado.getChildren().get(i);
             e1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + lista[i]))));
         }
         eloDeseado.getChildren().stream().filter(ImageView.class::isInstance).map(ImageView.class::cast).forEach(e -> {
             e.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    eloDeseado.getChildren().stream().filter(ImageView.class::isInstance).map(ImageView.class::cast).forEach(e -> setDefaultSelected(e));
+                    eloDeseado.getChildren().stream().filter(ImageView.class::isInstance).map(ImageView.class::cast)
+                            .forEach(e -> setDefaultSelected(e));
                     selectedElo = e.getId().toUpperCase();
                     e.setFitWidth(110);
                     e.setFitHeight(110);
@@ -104,140 +123,163 @@ public class CalcController implements Initializable{
 
             });
         });
-
+        //Adding all the enum values to the division
         divisionDeseadaChoice.getItems().addAll(Divisiones.values());
-
 
     }
 
-    private void getUser(){
-        
+    /***
+     * Gets the user data from summoner and rankedEntry
+     */
+    private void getUser() {
+        //Too fast for a Thread maybe.
         Task<Void> tarea = new Task<Void>() {
-            
+
             @Override
             protected Void call() throws Exception {
-                
+
                 updateMessage("Procesando...");
 
                 try {
-                    profilePic.setImage(new Image(getClass().getResourceAsStream(String.format("/assets/profileIcon/%s.png",summoner.getProfileIconId()))));
+                    profilePic.setImage(new Image(getClass().getResourceAsStream(
+                            String.format("/assets/profileIcon/%s.png", summoner.getProfileIconId()))));
                     userAccountLabel.setText(summoner.getName());
-                    eloIcon.setImage(new Image(getClass().getResourceAsStream(String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
-                    updateMessage(String.format("%s %s %sLP", rankedEntry.getTier(),rankedEntry.getRank(),rankedEntry.getLeaguePoints()));
+                    eloIcon.setImage(new Image(getClass().getResourceAsStream(
+                            String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
+                    updateMessage(String.format("%s %s %sLP", rankedEntry.getTier(), rankedEntry.getRank(),
+                            rankedEntry.getLeaguePoints()));
 
-            } catch(NullPointerException e){
-                updateMessage("UNRANKED");
-            } catch(Exception e){
-                System.out.println(e.getMessage());
-            }
+                } catch (NullPointerException e) {
+                    updateMessage("UNRANKED");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 return null;
             }
-            
+
         };
-        
-        userDataLabel.textProperty().bind(tarea.messageProperty());;
+
+        userDataLabel.textProperty().bind(tarea.messageProperty());
+        ;
 
         new Thread(tarea).start();
     }
 
-    private void setDefaultSelected(ImageView e){
+    
+    /**
+     * Turns the eloIcon to its original state. 
+     * @param e
+     */
+    private void setDefaultSelected(ImageView e) {
         e.setFitHeight(64);
         e.setFitWidth(64);
     }
 
-    @FXML private void calcularWins(){
-
+    @FXML
+    private void calcularWins() {
+        //As more methods use the errorLabel, priorizing the error color
+        errorLabel.setStyle("-fx-text-fill:red;");
         try {
-            
-            if(tierErrorCheck() || dataErrorCheck() || eloErrorCheck())
-                    throw new LpsInvalidosException();
+
+            if (tierErrorCheck() || dataErrorCheck() || eloErrorCheck())
+                throw new LpsInvalidosException();
         } catch (LpsInvalidosException e) {
-            System.out.println("no se pudo calcular");
-            e.printStackTrace();
+            errorLabel.setText(errorLabel.getText()+"\nCouldn't calculate");
         }
 
+        //Reading the data from the ui.
         String[] data = userDataLabel.getText().split(" ");
 
         String eloActual = data[0].toUpperCase();
 
         String divActual = data[1].toUpperCase();
-
-        int eloDiff = (Elos.valueOf(selectedElo).elo - Elos.valueOf(eloActual).elo ) / 400;
+        //Using the points difference of the enums, it's possible to guess how far both elos are
+        int eloDiff = (Elos.valueOf(selectedElo).elo - Elos.valueOf(eloActual).elo) / 400;
         double promoWins = Math.floor(eloDiff * 3);
-        
+
+        //Parsing data and cooking some maths
         double lpspergame = Double.parseDouble(lpsLabel.getText());
-        
+
         int lpsActuales = Integer.parseInt(data[2].replaceAll("[^0-9]", ""));
 
         int totalActual = Elos.valueOf(eloActual).elo + Divisiones.valueOf(divActual).div + lpsActuales;
 
         int totalDeseado = Elos.valueOf(selectedElo).elo + divisionDeseadaChoice.getValue().div;
 
-        double winsSinPromo = Math.ceil((totalDeseado - totalActual)/lpspergame);
+        double winsSinPromo = Math.ceil((totalDeseado - totalActual) / lpspergame);
 
         int winsTotales = 0;
-
-        if(promoWins>0)
-            winsTotales = (int)winsSinPromo + (int)promoWins;
+        //Checks if it's needed to add the promo wins
+        if (promoWins > 0)
+            winsTotales = (int) winsSinPromo + (int) promoWins;
         else
-            winsTotales = (int)winsSinPromo;
+            winsTotales = (int) winsSinPromo;
 
+        //Showing result!
         resultadoLabel.setText(String.valueOf(winsTotales));
-        errorLabel.setText("Operación realizada con éxito");
+        errorLabel.setStyle("-fx-text-fill:rgb(132, 255, 0);");
+        errorLabel.setText("Successful operation!");
     }
-
-    private boolean tierErrorCheck(){
+    /***
+     * Checks if there's errors in the user data
+     */
+    private boolean tierErrorCheck() {
         try {
-            if(userDataLabel.getText().equals("UNRANKED")){
-                errorLabel.setText("No se puede usar la aplicación con cuentas sin elo");
+            if (userDataLabel.getText().equals("UNRANKED")) {
+                errorLabel.setText("This feature can't be used with unranked accounts");
                 return true;
-            }
-            else
+            } else
                 return false;
         } catch (NullPointerException e) {
-            errorLabel.setText("Se debe haber agregado el usuario");
+            errorLabel.setText("User should have been added first");
             return true;
         }
     }
-
-    private boolean dataErrorCheck(){
+    /***
+     * Verifies that lps per game are following the rules
+     */
+    private boolean dataErrorCheck() {
         try {
             int lpspergame = Integer.parseInt(lpsLabel.getText().replaceAll("[^0-9]", ""));
-            if(lpspergame<=0)
+            if (lpspergame <= 0)
                 throw new NumberFormatException();
-            else if(lpspergame>=40)
+            else if (lpspergame >= 40)
                 throw new LpsInvalidosException();
             else
                 return false;
         } catch (NumberFormatException e) {
-            errorLabel.setText("Los lp por partida deben ser un número entero positivo");
+            errorLabel.setText("The lps per game have to be a positive integer");
             return true;
         } catch (LpsInvalidosException e) {
-            errorLabel.setText("Los lp por partida no pueden ser igual o mayores a 40");
+            errorLabel.setText("The lps per game can't be equal or greater than 40");
             return true;
         } catch (NullPointerException e) {
-            errorLabel.setText("Los lp por partida no pueden ser nulos");
+            errorLabel.setText("The lps per game can't be null");
             return true;
         }
     }
-
-    private boolean eloErrorCheck(){
+    /***
+     * Checks if there is or not a selected elo
+     */
+    private boolean eloErrorCheck() {
         try {
-            if(selectedElo.length()<1)
+            if (selectedElo.length() < 1)
                 throw new NullEloException();
             else
                 return false;
         } catch (NullEloException e) {
-            errorLabel.setText("Tienes que elegir un elo");
+            errorLabel.setText("You have to choose an elo");
             return true;
         }
     }
-
-    private void goBack(){
-        if(Objects.isNull(App.calcScene))
+    /***
+     * Goes back to the previous screen.
+     */
+    private void goBack() {
+        if (Objects.isNull(App.calcScene))
             App.calcScene = new Scene(this.getView());
         else
-        App.calcScene.setRoot(this.getView());
+            App.calcScene.setRoot(this.getView());
         App.stage.setScene(App.statScene);
         App.stage.setHeight(560);
         App.stage.setWidth(685);

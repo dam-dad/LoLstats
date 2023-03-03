@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="root" fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="655.0" stylesheets="@../css/calcStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="eloDeseado" alignment="CENTER" layoutX="12.0" layoutY="182.0" prefHeight="73.0" prefWidth="450.0">
+      <HBox fx:id="eloDeseado" alignment="CENTER" layoutX="30.0" layoutY="224.0" prefHeight="73.0" prefWidth="450.0">
          <children>
             <ImageView fx:id="iron" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="bronze" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" />
@@ -35,24 +35,24 @@
             <Font size="15.0" />
          </font></Label>
       <TextField fx:id="lpsLabel" layoutX="174.0" layoutY="430.0" prefHeight="25.0" prefWidth="32.0" />
-      <Label layoutX="433.0" layoutY="327.0" prefHeight="25.0" prefWidth="143.0" text="NECESSARY WINS:">
+      <Label layoutX="430.0" layoutY="322.0" prefHeight="30.0" prefWidth="150.0" text="NECESSARY WINS:">
          <font>
-            <Font size="17.0" />
+            <Font name="System Bold" size="17.0" />
          </font></Label>
-      <Label fx:id="resultadoLabel" alignment="CENTER" contentDisplay="RIGHT" layoutX="450.0" layoutY="369.0" prefHeight="73.0" prefWidth="109.0" style="-fx-border-color: black; -fx-border-width: 2;" text="?" textAlignment="CENTER">
+      <Label id="wins" fx:id="resultadoLabel" alignment="CENTER" contentDisplay="RIGHT" layoutX="450.0" layoutY="369.0" prefHeight="73.0" prefWidth="109.0" text="?" textAlignment="CENTER">
          <font>
             <Font name="Arial" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabel" layoutX="38.0" layoutY="276.0" prefHeight="64.0" prefWidth="384.0">
+      <Label fx:id="errorLabel" layoutX="26.0" layoutY="314.0" prefHeight="64.0" prefWidth="384.0">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <JFXButton ellipsisString="" layoutX="424.0" layoutY="451.0" onAction="#calcularWins" prefHeight="50.0" prefWidth="161.0" text="CALCULATE">
+      <Button id="back" fx:id="backButton" layoutX="6.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+      <JFXButton id="boton" ellipsisString="" layoutX="424.0" layoutY="451.0" onAction="#calcularWins" prefHeight="50.0" prefWidth="161.0" text="CALCULATE">
          <font>
-            <Font size="23.0" />
+            <Font name="System Bold" size="23.0" />
          </font></JFXButton>
-      <Button fx:id="backButton" layoutX="6.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
       <ImageView fx:id="profilePic" fitHeight="120.0" fitWidth="120.0" layoutX="39.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="userAccountLabel" layoutX="174.0" layoutY="69.0" prefHeight="45.0" prefWidth="405.0" text="NombrePerfil">
          <font>
@@ -69,5 +69,10 @@
             </Label>
          </children>
       </HBox>
+      <Label alignment="CENTER" layoutX="177.0" layoutY="169.0" prefHeight="40.0" prefWidth="302.0" text="Click the elo you want to reach" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

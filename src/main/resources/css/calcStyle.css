@@ -1,0 +1,22 @@
+#root{
+    -fx-background-color:white;
+}
+
+#boton{
+    -fx-background-color:rgb(255, 122, 122);
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+}
+
+#wins{
+    -fx-background-color:rgb(122, 215, 255);
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+}
+
+#back{   
+    -fx-background-color:rgb(190, 103, 52);
+}
+

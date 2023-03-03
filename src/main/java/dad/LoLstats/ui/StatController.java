@@ -10,12 +10,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 import dad.LoLstats.api.LeagueEntry;
 import dad.LoLstats.api.MatchService;
+import dad.LoLstats.api.Player;
 import dad.LoLstats.api.Summoner;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -40,7 +43,13 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+/***
+ * Controller for the StatScene.
+ * Manages the match & rank data for {@link dad.LoLstats.ui.CalcController}, {@link dad.LoLstats.ui.StatController#loginOnClick()} and itself.
+ * @author katarem
+ * @version 1.0 March 3rd 2023
+ */
 public class StatController implements Initializable {
 
 	@FXML
@@ -61,6 +70,9 @@ public class StatController implements Initializable {
 	@FXML
 	private Button pdfButton, calcButton, logoutButton;
 
+	@FXML
+	private VBox wBox;
+
 	private Summoner summoner;
 
 	private ArrayList<LeagueEntry> elos;
@@ -69,9 +81,8 @@ public class StatController implements Initializable {
 
 	private String region;
 
-	public static String eloValue;
+	private List<Player> repList;
 
-	private ArrayList<GameController> gList;
 
 	public StatController(ArrayList<LeagueEntry> elos, String region) {
 		try {
@@ -86,6 +97,11 @@ public class StatController implements Initializable {
 		}
 	}
 
+	
+	/**
+	 * Sets the region according to the regcode 
+	 * @param reg The regcode we get for the {@link dad.LoLstats.api.MatchService} usage.
+	 */
 	private void getRegion(String reg) {
 
 		switch (reg) {
@@ -104,7 +120,6 @@ public class StatController implements Initializable {
 		case "br1":
 			region = "americas";
 			break;
-
 		case "na1":
 			region = "americas";
 			break;
@@ -123,7 +138,6 @@ public class StatController implements Initializable {
 		case "oce":
 			region = "sea";
 			break;
-
 		default:
 			region = "europe";
 			break;
@@ -136,10 +150,13 @@ public class StatController implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
+
+		//Styling
+		App.stage.setResizable(true);
+		
 		view.setCursor(new ImageCursor(
 				new Image(getClass().getResourceAsStream("/cursors/normal.png"), 128, 128, true, true)));
-
-		App.stage.setResizable(true);
+				
 		ImageView calcIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/calc-icon.png")));
 		calcIcon.setFitHeight(60);
 		calcIcon.setFitWidth(60);
@@ -147,28 +164,31 @@ public class StatController implements Initializable {
 		ImageView pdfIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/pdf-icon.png")));
 		pdfIcon.setFitHeight(60);
 		pdfIcon.setFitWidth(60);
-
+		
 		calcButton.setGraphic(calcIcon);
 		pdfButton.setGraphic(pdfIcon);
+		
+		logoutButton.setGraphic(new ImageView(
+			new Image(getClass().getResourceAsStream("/images/logout-icon.png"), 32, 32, true, true)));
+			
+		profilePicView.setImage(new Image(getClass()
+			.getResourceAsStream(String.format("/assets/profileicon/%s.png", summoner.getProfileIconId()))));
+		
+		playerNameLabel.setText(summoner.getName());
+		playerLevelLabel.setText("Level " + summoner.getSummonerLevel());
+
+		//Adding function to buttons
 		pdfButton.setOnAction(e -> {
 			try {
 				pdfOnClick();
 			} catch (JRException | IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
-
-		logoutButton.setGraphic(new ImageView(
-				new Image(getClass().getResourceAsStream("/images/logout-icon.png"), 32, 32, true, true)));
-
-		profilePicView.setImage(new Image(getClass()
-				.getResourceAsStream(String.format("/assets/profileicon/%s.png", summoner.getProfileIconId()))));
-
-		playerNameLabel.setText(summoner.getName());
-		playerLevelLabel.setText("Level " + summoner.getSummonerLevel());
-
+		
+		//Checking if the player has elo in RANKED SOLO/DUO
 		if (elos.size() > 0) {
+
 			int cont = 0;
 			for (int i = 0; i < elos.size(); i++) {
 				if (elos.get(i).getQueueType().equals("RANKED_SOLO_5x5")) {
@@ -176,100 +196,112 @@ public class StatController implements Initializable {
 					break;
 				}
 			}
-
+		//TRUE -> Preparing rank data & winrate
 			rankedEntry = elos.get(cont);
-			eloValue = rankedEntry.getTier() + " " + rankedEntry.getRank() + " " + rankedEntry.getLeaguePoints() + "LP";
-			eloLabel.setText(eloValue);
+			eloLabel.setText(rankedEntry.getTier() + " " + rankedEntry.getRank() + " " + rankedEntry.getLeaguePoints() + "LP");
 			eloView.setImage(new Image(getClass()
-					.getResourceAsStream(String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
-
+			.getResourceAsStream(String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));			
+			
+			//No other way to get the desired colors in the piechart than creating another blank datas.
 			ObservableList<PieChart.Data> piechartData = FXCollections.observableArrayList(
-					new PieChart.Data("LOSERATE", getWinrate(rankedEntry.getLosses(), rankedEntry.getWins())),
-					new PieChart.Data("a", 0), new PieChart.Data("a", 0),
-					new PieChart.Data("WINRATE", getWinrate(rankedEntry.getWins(), rankedEntry.getLosses())),
-					new PieChart.Data("a", 0), new PieChart.Data("a", 0));
-
+				new PieChart.Data("LOSERATE", getWinrate(rankedEntry.getLosses(), rankedEntry.getWins())),
+				new PieChart.Data("a", 0), new PieChart.Data("a", 0),
+				new PieChart.Data("WINRATE", getWinrate(rankedEntry.getWins(), rankedEntry.getLosses())),
+				new PieChart.Data("a", 0), new PieChart.Data("a", 0));
+				
 			winrateChart.setData(piechartData);
 			winrateChart.setLegendVisible(false);
-
+				
 			winrateLabel.setText(String.format("%sW %sL %.2f%%W/R", rankedEntry.getWins(), rankedEntry.getLosses(),
-					getWinrate(rankedEntry.getWins(), rankedEntry.getLosses())));
+			getWinrate(rankedEntry.getWins(), rankedEntry.getLosses())));
 
-		} else {
-
+		} 
+		
+		else {
+			//FALSE -> Displaying that the player has not enough rank data.
+			wBox.setVisible(false);
 			winrateLabel.setText("");
+			eloView.setImage(new Image(getClass().getResourceAsStream("/images/closeicon.png")));
 			eloLabel.setText("UNRANKED");
+					
+			}
+			//List for the pdf exporting.	
+			repList = new ArrayList<Player>();
+				
+			//Making use of a thread to try to improve the speed. If you know a better way lmk.
+			Task<Void> task = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {
 
-		}
+					ArrayList<GridPane> partidas = new ArrayList<>();
+					ArrayList<GameController> gList = new ArrayList<>();
 
-		Task<Void> task = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-
-				ArrayList<GridPane> partidas = new ArrayList<>();
-				gList = new ArrayList<>();
-
-				try {
-
-					MatchService mService = new MatchService(App.API_KEY, region);
-
-					ArrayList<String> gameIds = mService.getGames(summoner.getPuuid(), App.API_KEY);
-
-					for (String s : gameIds) {
-						GameController g = new GameController(mService.getGame(s));
-						if (g.getWin())
-							g.getView().setId("gameWon");
-						else
-							g.getView().setId("gameLost");
-						gList.add(g);
-						partidas.add(g.getView());
+					try {
+						//We initialize our matchservice with the data we need for it
+						MatchService mService = new MatchService(App.API_KEY, region);
+						//This will get us the gameID of the last 20 games of the account. 
+						ArrayList<String> gameIds = mService.getGames(summoner.getPuuid(), App.API_KEY);
+						//Iterating it we can get each game
+						for (String s : gameIds) {
+							//Prepares the UI of our game
+							GameController g = new GameController(mService.getGame(s));
+							//For the pdf exporting
+							repList.add(new Player(g.getPlayer(),summoner,rankedEntry));
+							//Blue if Win, Red if Lost
+							if (g.getWin())
+								g.getView().setId("gameWon");
+							else
+								g.getView().setId("gameLost");
+							gList.add(g);
+							partidas.add(g.getView());
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					//Getting the games into the ListView
+					ObservableList<GridPane> partidasToList = FXCollections.observableArrayList(partidas);
+					gamesView.getSelectionModel().setSelectionMode(null);
+					gamesView.setItems(partidasToList);
+					gamesView.setPadding(new Insets(0, 0, 0, 0));
+					gamesView.setFocusModel(null);
+					gamesView.setBorder(Border.EMPTY);
+					gamesView.setFocusTraversable(false);
+					//We need custom cells for a graphic Listcell
+					gamesView.setCellFactory(new Callback<ListView<GridPane>, ListCell<GridPane>>() {
 
-				ObservableList<GridPane> partidasToList = FXCollections.observableArrayList(partidas);
-				gamesView.getSelectionModel().setSelectionMode(null);
-				gamesView.setItems(partidasToList);
-				gamesView.setPadding(new Insets(0, 0, 0, 0));
-				gamesView.setFocusModel(null);
-				gamesView.setBorder(Border.EMPTY);
-				gamesView.setFocusTraversable(false);
-				gamesView.setCellFactory(new Callback<ListView<GridPane>, ListCell<GridPane>>() {
+						@Override
+						public ListCell<GridPane> call(ListView<GridPane> param) {
+							return new ListCell<>() {
+								@Override
+								public void updateItem(GridPane game, boolean empty) {
+									super.updateItem(game, empty);
 
-					@Override
-					public ListCell<GridPane> call(ListView<GridPane> param) {
-						return new ListCell<>() {
-							@Override
-							public void updateItem(GridPane game, boolean empty) {
-								super.updateItem(game, empty);
-
-								if (game != null) {
-									setText(null);
-									setGraphic(game);
-									for (GameController juego : gList) {
-										if (juego.getView().equals(game) && juego.getWin()) {
-											getGraphic().setId("wonGame");
-											break;
-										} else if (juego.getView().equals(game)) {
-											getGraphic().setId("lostGame");
-											break;
+									if (game != null) {
+										setText(null);
+										setGraphic(game);
+										for (GameController juego : gList) {
+											if (juego.getView().equals(game) && juego.getWin()) {
+												getGraphic().setId("wonGame");
+												break;
+											} else if (juego.getView().equals(game)) {
+												getGraphic().setId("lostGame");
+												break;
+											}
 										}
+										setBorder(Border.EMPTY);
+										setStyle("-fx-background-color:black;");
+										setPadding(new Insets(5, 5, 5, 5));
+										setWidth(game.getWidth());
+										setHeight(game.getHeight());
+										setMinHeight(game.getMinHeight());
+										setMinWidth(game.getMinWidth());
+										setAlignment(Pos.CENTER);
+									} else {
+										setText("null");
+										setGraphic(null);
 									}
-									setBorder(Border.EMPTY);
-									setStyle("-fx-background-color:black;");
-									setPadding(new Insets(5, 5, 5, 5));
-									setWidth(game.getWidth());
-									setHeight(game.getHeight());
-									setMinHeight(game.getMinHeight());
-									setMinWidth(game.getMinWidth());
-									setAlignment(Pos.CENTER);
-								} else {
-									setText("null");
-									setGraphic(null);
 								}
-							}
-						};
+							};
 					}
 
 				});
@@ -277,14 +309,17 @@ public class StatController implements Initializable {
 			}
 		};
 		new Thread(task).run();
-		;
 
+		//Getting the desired size for the window
 		App.stage.setWidth(view.getPrefWidth() + 40);
 		App.stage.setHeight(view.getPrefHeight());
 		App.stage.setMinWidth(view.getMinWidth() + 40);
 		App.stage.setMinHeight(view.getMinHeight() + 35);
 	}
 
+	/***
+	 * Swaps the current Screen to the {@link dad.LoLstats.ui.CalcController}'s Scene
+	 */
 	@FXML
 	private void calcOnClick() {
 		if (Objects.isNull(App.calcScene))
@@ -300,6 +335,9 @@ public class StatController implements Initializable {
 		App.stage.show();
 	}
 
+	/*** 
+	 * Swaps the current Screen to the {@link dad.LoLstats.ui.LoginController}'s Scene
+	 * ***/
 	@FXML
 	private void loginOnClick() {
 		App.stage.setScene(App.loginScene);
@@ -309,35 +347,48 @@ public class StatController implements Initializable {
 		App.stage.show();
 	}
 
+	
+	/**
+	 * Prepares the info obtained previously from the player's games and returns a PDF File.
+	 * @throws JRException
+	 * @throws IOException
+	 */
 	@FXML
 	public void pdfOnClick() throws JRException, IOException {
-
-//		System.out.println(getClass().getResourceAsStream("/reports/gamesReport.jrxml"));
-		
+		//Reading the XML
 		JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/gamesReport.jrxml"));
-		System.out.println("clicked");
+		
+		//Preparing the external parameters we have to insert.
 		Map<String, Object> parameters = new HashMap<String, Object>();
-
 		parameters.put("sumName", App.summoner.getName());
 		parameters.put("sumLvL", App.summoner.getSummonerLevel());
-		parameters.put("sumElo", StatController.eloValue);
+		parameters.put("sumElo", String.format("%s %s %sLP", rankedEntry.getTier(), rankedEntry.getRank(),rankedEntry.getLeaguePoints()));
 
-		JasperPrint print = JasperFillManager.fillReport(report, parameters);
+		//Filling the design with the data we provided
+		JasperPrint print = JasperFillManager.fillReport(report, parameters, new JRBeanCollectionDataSource(repList));
 
 		File pdf = new File("pdf");
 		if (!pdf.exists()) {
 			pdf.mkdir();
 		}
-		
+		//Creates the file and opens it with the system's default pdf viewer.
 		JasperExportManager.exportReportToPdfFile(print, "pdf/gamePDF.pdf");
 
 		java.awt.Desktop.getDesktop().open(new File("pdf/gamePDF.pdf"));
 	}
 
+
+	/***
+	 * 
+	 * @param wins
+	 * @param losses
+	 * @return winrate
+	 */
 	private static double getWinrate(int wins, int losses) {
 		int partidas = wins + losses;
 		double vic = (double) wins / partidas;
-		return vic * 100;
+		double winrate = vic*100;
+		return winrate;
 	}
 
 }

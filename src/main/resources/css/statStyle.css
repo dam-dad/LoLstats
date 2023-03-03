@@ -1,10 +1,8 @@
 #root{
-    /* -fx-background-color: rgb(107, 70, 230); */
-    -fx-background-color: rgb(23, 118, 153);    
+    -fx-background-color: rgb(209, 187, 80);    
 }
+
 #left{
-    
-    /* -fx-background-color: rgb(110, 102, 102); */
     -fx-background-color: rgb(0,0,0);
 }
 
@@ -14,18 +12,12 @@
     -fx-border-width: 2px;
 }
 
-#user-icon{
-    -fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-width: 2px;
-}
-
 #list{
     -fx-background-color: black;
 }
 
 Button{
-    -fx-background-color: yellow;
+    -fx-background-color: rgb(102, 194, 74);
 }
 
 #wonGame{
@@ -34,4 +26,8 @@ Button{
 
 #lostGame{
     -fx-background-color: rgb(249, 113, 113);
+}
+
+#exit{
+    -fx-background-color: red;
 }

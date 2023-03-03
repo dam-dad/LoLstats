@@ -1,130 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gamesReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d45165cf-60b6-40c8-ba45-0eaab56c5052">
+	<parameter name="sumName" class="java.lang.String"/>
+	<parameter name="sumLvL" class="java.lang.String"/>
+	<parameter name="sumElo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="championPlayed" class="java.lang.String"/>
+	<field name="kda" class="java.lang.String"/>
+	<field name="cs" class="java.lang.Integer"/>
+	<field name="damage" class="java.lang.Integer"/>
+	<field name="win" class="java.lang.Boolean"/>
+	<field name="userIcon" class="java.lang.String"/>
+	<field name="eloIcon" class="java.lang.String"/>
+	<field name="championIcon" class="java.lang.String"/>
+	<variable name="gameCount" class="java.lang.Integer" incrementType="Report" calculation="Sum">
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="60" splitType="Stretch">
-			<staticText>
-				<reportElement x="10" y="0" width="540" height="30" uuid="1c7955a4-027f-4069-b852-34271d80f333"/>
-				<textElement textAlignment="Center">
-					<font size="20"/>
-				</textElement>
-				<text><![CDATA[Player's Games Report]]></text>
-			</staticText>
-			<textField pattern="dd,MMMMM, yyyy">
-				<reportElement x="10" y="30" width="290" height="30" uuid="2d5c26ee-04aa-4644-850b-20874f1f4bcc"/>
+			<textField pattern="dd/MMMMM,/yyyy">
+				<reportElement x="135" y="30" width="290" height="30" uuid="2d5c26ee-04aa-4644-850b-20874f1f4bcc"/>
 				<textElement textAlignment="Center">
 					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Date generated: " + new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField pattern="HH:mm">
-				<reportElement x="300" y="30" width="250" height="30" uuid="52e8447e-decc-4cd4-81cd-dd0b3bd4e5fa"/>
-				<textElement>
-					<font size="16"/>
+			<textField>
+				<reportElement x="89" y="0" width="374" height="30" uuid="ee8c6e39-7d3a-47b1-939d-f3b3ba2cc730"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{sumName} + "'s Games Report"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="124" splitType="Stretch">
-			<image>
-				<reportElement x="10" y="8" width="90" height="90" uuid="093a9caf-1bc2-4b1b-91ad-41a369750474">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<imageExpression><![CDATA[""]]></imageExpression>
-			</image>
+		<band height="131" splitType="Stretch">
 			<staticText>
-				<reportElement x="290" y="8" width="250" height="30" uuid="edc9c66d-8050-43b3-964c-227d0867e3a8"/>
-				<textElement>
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[$P{sumName}]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="110" y="10" width="164" height="28" uuid="a209c9c3-ad3d-4d8f-93fd-13eeaa21413c"/>
+				<reportElement x="10" y="10" width="164" height="28" uuid="a209c9c3-ad3d-4d8f-93fd-13eeaa21413c"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Summoner's Name: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="38" width="100" height="30" uuid="fd5d6e4e-a935-46a9-80d2-d6526f588777"/>
+				<reportElement x="10" y="40" width="100" height="30" uuid="fd5d6e4e-a935-46a9-80d2-d6526f588777"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Level:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="290" y="38" width="250" height="30" uuid="f2659e77-801c-4892-b15c-ea6835f79725"/>
-				<textElement>
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[$P{sumLvL}]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="110" y="70" width="100" height="30" uuid="b550e984-b312-44ad-8f08-988ae242f7c2"/>
+				<reportElement x="10" y="70" width="100" height="30" uuid="b550e984-b312-44ad-8f08-988ae242f7c2"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Elo:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="290" y="70" width="250" height="30" uuid="85f8a5a3-f40e-4dd3-91cd-ee4117ee22ee"/>
-				<textElement>
+			<textField>
+				<reportElement x="174" y="9" width="244" height="30" uuid="054564c8-8903-4e9a-b4c9-f98b9161e6e8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
-				<text><![CDATA[$P{sumElo}]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{sumName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="40" width="245" height="30" uuid="a9b4c0c9-c742-466a-9149-cc4f29962af5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sumLvL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="70" width="244" height="30" uuid="e6c1eff7-8fbf-48f0-b791-e3ec2a9a96ab"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sumElo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="29" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<rectangle>
 				<reportElement x="3" y="0" width="549" height="29" backcolor="#030000" uuid="39815032-94bd-432c-a248-6c45198ae8ec"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="3" y="0" width="548" height="28" forecolor="#FFFFFF" uuid="795a159c-aab2-4a1f-8737-72e54c7314e8"/>
-				<textElement textAlignment="Center">
-					<font size="20"/>
-				</textElement>
-				<text><![CDATA[Games]]></text>
+				<reportElement x="3" y="-1" width="86" height="30" forecolor="#FFFFFF" uuid="566f2b33-47c6-4ed5-8389-be2b0436c1b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[GAME NUMBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="-1" width="100" height="30" forecolor="#FFFFFF" uuid="b511ad38-f0a2-4f50-a5cb-e973e1b1eb44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CHAMPION PLAYED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="-1" width="74" height="30" forecolor="#FFFFFF" uuid="25b81ce3-91c3-4c41-9265-49acc54221fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[KDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="80" height="30" forecolor="#FFFFFF" uuid="98733a9e-f7b4-4978-8356-653c261e084b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="-1" width="100" height="30" forecolor="#FFFFFF" uuid="a2d9c339-93ba-4914-91ca-2ebde8e73685"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DAMAGE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="4" width="50" height="20" forecolor="#FFFFFF" uuid="909236e8-3a7c-45e1-b80b-afe707b8a762"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[WIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="0" width="100" height="30" uuid="20b8b452-0b1b-4add-a4f8-1671bb6649b8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="caea289e-b2e4-4279-9e08-fb3b009a120f"/>
+				</reportElement>
+				<text><![CDATA[championPlayed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="0" width="100" height="30" uuid="499f7917-6e69-47fe-a70c-714ac65027d7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ca6a8da9-01a9-4a7e-9a96-9c5edb2cf95a"/>
+				</reportElement>
+				<text><![CDATA[kda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="0" width="100" height="30" uuid="caa4b75e-c211-4e8a-b54d-9fd9cea903cd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62c6ca98-c5e8-4c77-becd-8618431a96b5"/>
+				</reportElement>
+				<text><![CDATA[cs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="100" height="30" uuid="2c1720b9-bf86-407b-93f9-3d60642fced8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6b9eed3-3d19-40ac-b090-2af85a8ec3dd"/>
+				</reportElement>
+				<text><![CDATA[damage]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="127" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<rectangle>
-				<reportElement x="110" y="3" width="442" height="120" uuid="d333d004-e6ac-4125-ba41-6fa81408112f"/>
+				<reportElement x="1" y="10" width="552" height="50" uuid="d333d004-e6ac-4125-ba41-6fa81408112f"/>
 			</rectangle>
-			<staticText>
-				<reportElement x="5" y="40" width="100" height="30" uuid="6441f347-df1c-476f-9e62-ba84f26c2d32"/>
-				<textElement>
-					<font size="16"/>
-				</textElement>
-				<text><![CDATA[Game 1]]></text>
-			</staticText>
+			<textField>
+				<reportElement x="116" y="20" width="74" height="30" uuid="73b2a82c-b62a-4632-b211-c7262c35b273">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="caea289e-b2e4-4279-9e08-fb3b009a120f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{championPlayed}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="20" width="60" height="30" uuid="e76b2374-d2a7-4ef1-9329-1882a3990f64">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ca6a8da9-01a9-4a7e-9a96-9c5edb2cf95a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="20" width="70" height="30" uuid="a31c0527-c979-4f55-b018-f41bea2f4b07">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62c6ca98-c5e8-4c77-becd-8618431a96b5"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="20" width="70" height="30" uuid="33781573-80ef-4608-b8b5-a3e9e0c14ce5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72b60f9a-8562-4e99-b37d-477c7d1a965c"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($F{win}?"YES":"NO")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="20" width="88" height="30" uuid="162ca273-9fa5-49b8-bf10-79d4d870481e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6b9eed3-3d19-40ac-b090-2af85a8ec3dd"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{damage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="20" width="30" height="30" uuid="a9e255bb-3aaa-49fe-aad4-900c1d785d8a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="65" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="230" y="35" width="100" height="30" uuid="c19dd9c7-10e8-48a4-a2e2-17dc1d6b16f8"/>
+				<reportElement x="227" y="14" width="100" height="30" uuid="c19dd9c7-10e8-48a4-a2e2-17dc1d6b16f8"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
+	</pageFooter>
+	<summary>
+		<band height="65" splitType="Stretch"/>
 	</summary>
 </jasperReport>

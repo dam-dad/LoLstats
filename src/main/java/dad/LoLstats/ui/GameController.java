@@ -46,6 +46,10 @@ public class GameController implements Initializable{
         }
     }
 
+    public Participant getPlayer(){
+        return player;
+    }
+
     public GridPane getView(){
         return view;
     }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import com.google.gson.Gson;
 import retrofit2.Response;
 
 import okhttp3.ConnectionPool;
@@ -15,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SummonerService {
     
     private String BASE_URL = "https://euw1.api.riotgames.com/lol/";
-    private Gson gson = new Gson();
     private LoLInterface service;
     private String API_KEY;
     public SummonerService(String API_KEY, String region){
@@ -39,7 +37,7 @@ public class SummonerService {
         service = retrofit.create(LoLInterface.class);
     }
 
-    public Summoner getSummoner(String summonerName) throws Exception{
+    public Summoner getSummoner(String summonerName) throws IOException{
         Response<Summoner> response = service
                 .getSummoner(summonerName, API_KEY)
                 .execute();

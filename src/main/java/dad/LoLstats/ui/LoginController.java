@@ -39,7 +39,12 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/***
+ * Controller for the LoginScene.
+ * Collects the data we need for going further into {@link dad.LoLstats.ui.StatController}.  
+ * @author katarem
+ * @version 1.0 March 3rd 2023
+ */
 public class LoginController implements Initializable{
 
     @FXML private BorderPane view;
@@ -67,31 +72,44 @@ public class LoginController implements Initializable{
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true))); 
 
+        //Styling
+        view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true))); 
         BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("/images/Kaisa_0.jpg")), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         view.setBackground(new Background(bImage));
+        title.setFont(Font.loadFont(getClass().getResourceAsStream("/font/Friz Quadrata Regular.ttf"), 80));
        
 
-        String[] servers = {"Brassil","North & East Europe","West Europe","North Latin America","South Latin America","North America","Russia","Oceania","Japan","Turkey","Corea"};
-
+        //Preparing a server list
+        String[] servers = {"Brasil","North & East Europe","West Europe","North Latin America","South Latin America","North America","Russia","Oceania","Japan","Turkey","Corea"};
         serverSelector.getItems().addAll(servers);
         serverSelector.setValue("Server");
-        title.setFont(Font.loadFont(getClass().getResourceAsStream("/font/Friz Quadrata Regular.ttf"), 80));
+
+        //Asking the user for the api key
         setApiKey();
     }
 
-    @FXML private void getUser(){
+    /***
+     * This function will communicate through the services and will lead to the {@link dad.LoLstats.ui.StatController}'s Scene.
+     */
+    @FXML
+    private void getUser(){
+
+        //Getting the region in the correct way
         String region = getRegion();
 
         try {
-            
+            //Initializing the SummonerService
             SummonerService summService = new SummonerService(App.API_KEY, region);
-            
+
             Summoner summoner = summService.getSummoner(userInput.getText());
 
-            ArrayList<LeagueEntry> elos = summService.getElos(summoner.getId());
+            //Setting up the summoner in app so it can be accessed anywhere
             App.summoner = summoner;
+            
+            //Getting the elos from the SummonerService and then swapping into StatScene.
+            ArrayList<LeagueEntry> elos = summService.getElos(summoner.getId());
+            
             StatController stat = new StatController(elos, region);
             App.statScene = new Scene(stat.getView());
             App.stage.setScene(App.statScene);
@@ -99,20 +117,30 @@ public class LoginController implements Initializable{
                 App.loginScene = new Scene(this.getView());
             else
                 App.loginScene.setRoot(this.view);
+
+            //Cleaning for next user
             userInput.setText("");
             serverSelector.setValue("Server");
             App.stage.show();
 
-        } catch (Exception e) {
-            view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"))));
+        } catch (IOException e1){
             Alert alerta = new Alert(AlertType.ERROR);
-            alerta.setTitle("ERROR");
-            alerta.setContentText(e.getMessage());
-            e.printStackTrace();
+            alerta.setTitle("INVALID API KEY");
+            alerta.setContentText("The given api key is wrong/null.");
+            alerta.show();
+        }
+        catch (Exception e) {
+            //In case of error, an error dialogpane will be shown.
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("USER NOT FOUND");
+            alerta.setContentText("That user doesn't exist in that region.");
             alerta.show();
         }
     }
-
+    /**
+	 * Sets the regcode according to the region. 
+	 * @param retorno The regcode we get for the {@link dad.LoLstats.api.SummonerService} usage.
+	 */
     private String getRegion() {
         String retorno;
         switch (serverSelector.getValue()) {
@@ -168,12 +196,14 @@ public class LoginController implements Initializable{
         return retorno;
     }
 
-
+    /***
+     * Displays a Dialog to obtain the {@link dad.LoLstats.ui.App#API_KEY} for the application setup.
+     */
     private void setApiKey(){
         try{
         TextInputDialog dialog = new TextInputDialog();
-            dialog.getDialogPane().getButtonTypes().clear();
             
+            //Styling
             ImageView dView = new ImageView(new Image(getClass().getResourceAsStream("/images/key-icon.png")));
             dView.setFitWidth(120);
             dView.setFitHeight(60);
@@ -181,31 +211,46 @@ public class LoginController implements Initializable{
 
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(dView.getImage());
+
+            //Preparing buttons
+            dialog.getDialogPane().getButtonTypes().clear();
             final ButtonType apiType = new ButtonType("GET",ButtonData.YES);
             ButtonType continuar = new ButtonType("NEXT", ButtonData.OK_DONE);
             ButtonType cancelar = new ButtonType("CANCEL",ButtonData.CANCEL_CLOSE);
             dialog.getDialogPane().getButtonTypes().addAll(apiType,continuar,cancelar);
             Button goApiButton = (Button) dialog.getDialogPane().lookupButton(apiType);
+            
+            //Filter to prevent the window from closing when actioning the button.
             EventHandler<ActionEvent> filter = event -> {
                 try {
                     java.awt.Desktop.getDesktop().browse(new URI("https://developer.riotgames.com"));
                     event.consume();
                 } catch (IOException | URISyntaxException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
                     event.consume();
                 }
             };
-
+            // Chinese "PasswordInputDialog". Better ideas lmk
+            dialog.getEditor().textProperty().addListener(e -> {
+                if(!dialog.getEditor().getText().isEmpty())
+                    dialog.getEditor().setStyle("-fx-background-color:red;-fx-text-fill:red;");
+                else
+                    dialog.getEditor().setStyle("-fx-background-color:white;");
+            });
             goApiButton.addEventFilter(ActionEvent.ACTION, filter);
+            //More styling
             dialog.setTitle("API KEY");
             dialog.setHeaderText("INSERT API KEY");
             dialog.setContentText("If you don't know how to get it just click in the button below.");
+
+            //Getting the api key from the dialog and setting it up in App.
             Optional<String> datosRecogidos = dialog.showAndWait();
             App.API_KEY = datosRecogidos.get();
         } catch(NoSuchElementException e){
-            e.printStackTrace();
-            System.exit(1);
+            //Showing the user they can't let the api key null
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("ERROR");
+            alerta.setContentText("The api key can't be null.");
+            alerta.show();
         }
     }
 }
