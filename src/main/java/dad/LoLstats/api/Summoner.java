@@ -1,5 +1,8 @@
 package dad.LoLstats.api;
 
+/***
+ * JavaBean to get the Summoner data
+ */
 public class Summoner {
     String name;
     String id;

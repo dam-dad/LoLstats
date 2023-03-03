@@ -14,6 +14,30 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<exec.mainClass>dad.LoLstats.ui.Main</exec.mainClass>
 	</properties>
+	<build>
+		<plugins>
+				<plugin>
+					<groupId>io.github.fvarrui</groupId>
+					<artifactId>javapackager</artifactId>
+					<version>1.7.0</version>
+					<configuration>
+						<mainClass>fvarrui.sample.Main</mainClass>
+					</configuration>
+					<executions>
+						<execution>
+							<id>bundle-with-jre</id>
+							<phase>package</phase>
+							<goals>
+								<goal>package</goal>
+							</goals>
+							<configuration>
+								<bundleJre>true</bundleJre>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>

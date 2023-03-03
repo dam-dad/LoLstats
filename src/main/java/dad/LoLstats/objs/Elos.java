@@ -1,5 +1,10 @@
 package dad.LoLstats.objs;
 
+/***
+ * Enum to get the LP value from a Elo Constant
+ * @author katarem
+ * @version 1.0 March 3rd 2023
+ */
 public enum Elos {
     IRON(0),
     BRONZE(400),

@@ -4,6 +4,9 @@ package dad.LoLstats.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/***
+ * JavaBean to get a League of Legends game's data
+ */
 public class GameInfo {
 
     @SerializedName("metadata")

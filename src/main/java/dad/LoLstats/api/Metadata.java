@@ -5,6 +5,9 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/***
+ * JavaBean to get more specified data from {@link GameInfo}, like the List of {@link Participant} from a game. 
+ **/
 public class Metadata {
 
     @SerializedName("dataVersion")

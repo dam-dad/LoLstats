@@ -1,5 +1,8 @@
 package dad.LoLstats.api;
 
+/***
+ * Error Handler for the Services.
+ */
 class ErrorMessage {
 
 	private String message;

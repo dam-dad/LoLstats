@@ -29,7 +29,7 @@ import dad.LoLstats.api.Summoner;
 import dad.LoLstats.exceptions.*;
 /***
  * Controller for the CalcScene.
- * Gets the data given from {@link dad.LoLstats.ui.StatController} and calculates the wins needed for a greater elo.  
+ * Gets the data given from {@link StatController} and calculates the wins needed for a greater elo.  
  * @author katarem
  * @version 1.0 March 3rd 2023
  */
@@ -81,13 +81,15 @@ public class CalcController implements Initializable {
         return view;
     }
     /***
-     * @return summoner the last summoner that has been searched.
+     * @return Last {@link Summoner} that has been searched.
      */
     public static Summoner getSummoner() {
         return CalcController.summoner;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+        App.stage.setWidth(view.getPrefWidth()+15);
+        App.stage.setHeight(view.getPrefHeight());
         //Getting user data
         getUser();
 
@@ -129,7 +131,7 @@ public class CalcController implements Initializable {
     }
 
     /***
-     * Gets the user data from summoner and rankedEntry
+     * Gets the user data from {@link Summoner} and {@link rankedEntry}
      */
     private void getUser() {
         //Too fast for a Thread maybe.
@@ -142,7 +144,7 @@ public class CalcController implements Initializable {
 
                 try {
                     profilePic.setImage(new Image(getClass().getResourceAsStream(
-                            String.format("/assets/profileIcon/%s.png", summoner.getProfileIconId()))));
+                            String.format("/assets/profileIcon/%s.png", CalcController.summoner.getProfileIconId()))));
                     userAccountLabel.setText(summoner.getName());
                     eloIcon.setImage(new Image(getClass().getResourceAsStream(
                             String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
@@ -152,7 +154,7 @@ public class CalcController implements Initializable {
                 } catch (NullPointerException e) {
                     updateMessage("UNRANKED");
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
                 return null;
             }
@@ -228,7 +230,8 @@ public class CalcController implements Initializable {
             if (userDataLabel.getText().equals("UNRANKED")) {
                 errorLabel.setText("This feature can't be used with unranked accounts");
                 return true;
-            } else
+            }
+            else
                 return false;
         } catch (NullPointerException e) {
             errorLabel.setText("User should have been added first");
@@ -265,10 +268,15 @@ public class CalcController implements Initializable {
         try {
             if (selectedElo.length() < 1)
                 throw new NullEloException();
+            else if(Elos.valueOf(selectedElo).elo<Elos.valueOf(userDataLabel.getText().split(" ")[0]).elo)
+                throw new InvalidEloException();
             else
                 return false;
         } catch (NullEloException e) {
             errorLabel.setText("You have to choose an elo");
+            return true;
+        } catch (InvalidEloException e) {
+            errorLabel.setText("The elo you want to reach has to be higher than actual");
             return true;
         }
     }

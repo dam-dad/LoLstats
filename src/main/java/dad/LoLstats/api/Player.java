@@ -1,5 +1,10 @@
 package dad.LoLstats.api;
 
+import dad.LoLstats.ui.StatController;
+
+/***
+ * JavaBean to collect a player's game data for the {@link StatController#pdfOnClick()}
+ */
 public class Player {
     
     private Integer cs;

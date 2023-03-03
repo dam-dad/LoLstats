@@ -67,3 +67,81 @@ Launcher:	C:\Program Files\Java\jdk-19\bin\javaw.exe
 Launcher args:	-jar "C:\Users\elson\Documents\GitHub\Java\DAD\LoLstats\LoLstats1.0.exe"
 Args length:	72/32768 chars
 Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\elson\Documents\GitHub\Java\DAD\LoLstats\LoLstats1.0.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\elson\Documents\GitHub\Java\DAD\LoLstats\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.015.000
+Java max ver:	
+Substitute:	JAVA_HOME = 
+Substitute:	PATH = C:\Users\elson\scoop\apps\miniconda3\current\scripts;C:\Users\elson\scoop\apps\miniconda3\current\Library\bin;C:\Python311\Scripts\;C:\Python311\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\dotnet\;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\protoc-21.9-win64\bin;C:\Users\elson\scoop\shims;C:\Users\elson\AppData\Local\Microsoft\WindowsApps;C:\Users\elson\AppData\Local\spicetify;C:\Users\elson\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\elson\AppData\Local\Programs\oh-my-posh\bin;C:\Program Files\Oracle\VirtualBox;C:\Users\elson\AppData\Roaming\npm;C:\tools\neovim\nvim-win64\bin;C:\tools\lua-language-server\bin;C:\Program Files\WireGuard\;C:\Users\elson\scoop\apps\miniconda3\current\scripts;C:\Users\elson\scoop\apps\miniconda3\current\Library\bin;C:\Users\elson\scoop\shims;C:\Users\elson\AppData\Local\Microsoft\WindowsApps;C:\Users\elson\AppData\Local\spicetify;C:\Users\elson\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\elson\AppData\Local\Programs\oh-my-posh\bin;C:\Program Files\Oracle\VirtualBox;C:\Users\elson\AppData\Roaming\npm;C:\tools\neovim\nvim-win64\bin;C:\protoc-21.9-win64\bin;C:\Program Files (x86)\Java\jre1.8.0_361\bin
+JRE paths:	;C:\Users\elson\scoop\apps\miniconda3\current\scripts;C:\Users\elson\scoop\apps\miniconda3\current\Library\bin;C:\Python311\Scripts\;C:\Python311\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\dotnet\;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\protoc-21.9-win64\bin;C:\Users\elson\scoop\shims;C:\Users\elson\AppData\Local\Microsoft\WindowsApps;C:\Users\elson\AppData\Local\spicetify;C:\Users\elson\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\elson\AppData\Local\Programs\oh-my-posh\bin;C:\Program Files\Oracle\VirtualBox;C:\Users\elson\AppData\Roaming\npm;C:\tools\neovim\nvim-win64\bin;C:\tools\lua-language-server\bin;C:\Program Files\WireGuard\;C:\Users\elson\scoop\apps\miniconda3\current\scripts;C:\Users\elson\scoop\apps\miniconda3\current\Library\bin;C:\Users\elson\scoop\shims;C:\Users\elson\AppData\Local\Microsoft\WindowsApps;C:\Users\elson\AppData\Local\spicetify;C:\Users\elson\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\elson\AppData\Local\Programs\oh-my-posh\bin;C:\Program Files\Oracle\VirtualBox;C:\Users\elson\AppData\Roaming\npm;C:\tools\neovim\nvim-win64\bin;C:\protoc-21.9-win64\bin;C:\Program Files (x86)\Java\jre1.8.0_361\bin
+Check launcher:	C:\Users\elson\scoop\apps\miniconda3\current\scripts\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\scoop\apps\miniconda3\current\Library\bin\javaw.exe (not found)
+Check launcher:	C:\Python311\Scripts\bin\javaw.exe (not found)
+Check launcher:	C:\Python311\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\system32\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\System32\Wbem\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\System32\WindowsPowerShell\v1.0\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\System32\OpenSSH\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\dotnet\bin\javaw.exe (not found)
+Check launcher:	C:\ProgramData\chocolatey\bin\javaw.exe (not found)
+Check launcher:	C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Git\cmd\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\nodejs\bin\javaw.exe (not found)
+Check launcher:	C:\protoc-21.9-win64\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\scoop\shims\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\Microsoft\WindowsApps\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\spicetify\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\Programs\Microsoft VS Code\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\Programs\oh-my-posh\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Oracle\VirtualBox\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Roaming\npm\bin\javaw.exe (not found)
+Check launcher:	C:\tools\neovim\nvim-win64\bin\javaw.exe (not found)
+Check launcher:	C:\tools\lua-language-server\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\WireGuard\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\scoop\apps\miniconda3\current\scripts\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\scoop\apps\miniconda3\current\Library\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\scoop\shims\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\Microsoft\WindowsApps\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\spicetify\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\Programs\Microsoft VS Code\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Local\Programs\oh-my-posh\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Oracle\VirtualBox\bin\javaw.exe (not found)
+Check launcher:	C:\Users\elson\AppData\Roaming\npm\bin\javaw.exe (not found)
+Check launcher:	C:\tools\neovim\nvim-win64\bin\javaw.exe (not found)
+Check launcher:	C:\protoc-21.9-win64\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\Java\jre1.8.0_361\bin\javaw.exe (OK)
+Version string: 1.008.000_361 / 32-Bit (Ignore)
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Version string: 1.008.000 / 32-Bit (Ignore)
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_361
+Version string: 1.008.000_361 / 32-Bit (Ignore)
+Ignore:		1.008.000_361
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+32-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+32-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\19
+Version string: 1.019.000 / 64-Bit (OK)
+Check launcher:	C:\Program Files\Java\jdk-19\bin\javaw.exe (OK)
+Match:		1.019.000
+Runtime used:	1.019.000 (64-bit)
+Launcher:	C:\Program Files\Java\jdk-19\bin\javaw.exe
+Launcher args:	-jar "C:\Users\elson\Documents\GitHub\Java\DAD\LoLstats\LoLstats1.0.exe"
+Args length:	72/32768 chars
+Exit code:	0

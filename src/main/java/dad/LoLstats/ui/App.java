@@ -6,6 +6,11 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
+/***
+ * The Application itself that will be switching by the Scene provided by the controllers.
+ * @author katarem 
+ * @version 1.0 March 3rd 2023
+ */
 public class App extends Application{
 
     public static Stage stage;

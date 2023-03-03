@@ -41,7 +41,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 /***
  * Controller for the LoginScene.
- * Collects the data we need for going further into {@link dad.LoLstats.ui.StatController}.  
+ * Collects the data we need for going further into {@link StatController}.  
  * @author katarem
  * @version 1.0 March 3rd 2023
  */
@@ -90,7 +90,7 @@ public class LoginController implements Initializable{
     }
 
     /***
-     * This function will communicate through the services and will lead to the {@link dad.LoLstats.ui.StatController}'s Scene.
+     * This function will communicate through the services and will lead to the {@link StatController}'s Scene.
      */
     @FXML
     private void getUser(){
@@ -139,7 +139,7 @@ public class LoginController implements Initializable{
     }
     /**
 	 * Sets the regcode according to the region. 
-	 * @param retorno The regcode we get for the {@link dad.LoLstats.api.SummonerService} usage.
+	 * @param retorno The regcode we get for the {@link SummonerService} usage.
 	 */
     private String getRegion() {
         String retorno;
@@ -197,7 +197,7 @@ public class LoginController implements Initializable{
     }
 
     /***
-     * Displays a Dialog to obtain the {@link dad.LoLstats.ui.App#API_KEY} for the application setup.
+     * Displays a Dialog to obtain the {@link App#API_KEY} for the application setup.
      */
     private void setApiKey(){
         try{

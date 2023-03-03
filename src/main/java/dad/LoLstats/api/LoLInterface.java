@@ -7,6 +7,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/***
+ * Interface for Services.
+ * Communicates the {@link SummonerService} & {@link MatchService} with the Riot API's calls.
+ * @author katarem
+ * @version 1.0 March 3rd 2023
+ */
 interface LoLInterface {
     
     @GET("summoner/v4/summoners/by-name/{summonerName}")

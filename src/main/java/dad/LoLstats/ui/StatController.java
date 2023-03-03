@@ -46,7 +46,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 /***
  * Controller for the StatScene.
- * Manages the match & rank data for {@link dad.LoLstats.ui.CalcController}, {@link dad.LoLstats.ui.StatController#loginOnClick()} and itself.
+ * Manages the match & rank data for {@link CalcController}, {@link StatController#loginOnClick()} and itself.
  * @author katarem
  * @version 1.0 March 3rd 2023
  */
@@ -100,7 +100,7 @@ public class StatController implements Initializable {
 	
 	/**
 	 * Sets the region according to the regcode 
-	 * @param reg The regcode we get for the {@link dad.LoLstats.api.MatchService} usage.
+	 * @param reg The regcode we get for the {@link MatchService} usage.
 	 */
 	private void getRegion(String reg) {
 
@@ -318,7 +318,7 @@ public class StatController implements Initializable {
 	}
 
 	/***
-	 * Swaps the current Screen to the {@link dad.LoLstats.ui.CalcController}'s Scene
+	 * Swaps the current Screen to the {@link CalcController}'s Scene
 	 */
 	@FXML
 	private void calcOnClick() {
@@ -336,7 +336,7 @@ public class StatController implements Initializable {
 	}
 
 	/*** 
-	 * Swaps the current Screen to the {@link dad.LoLstats.ui.LoginController}'s Scene
+	 * Swaps the current Screen to the {@link LoginController}'s Scene
 	 * ***/
 	@FXML
 	private void loginOnClick() {
@@ -379,7 +379,7 @@ public class StatController implements Initializable {
 
 
 	/***
-	 * 
+	 * Gets the Winrate from the wins and losses we provide it
 	 * @param wins
 	 * @param losses
 	 * @return winrate

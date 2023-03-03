@@ -5,6 +5,9 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/***
+ * JavaBean to get the perks (runes) data from {@link GameInfo}
+ */
 public class Perks {
 
     @SerializedName("statPerks")

@@ -15,3 +15,4 @@ LoLstats*.exe
 .classpath
 .project
 .vscode
+launch4j.log
