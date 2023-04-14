@@ -62,11 +62,10 @@ public class CalcController implements Initializable {
 
     private String selectedElo = "";
 
-    public CalcController(Summoner summoner, LeagueEntry rankedEntry) {
+    public CalcController(LeagueEntry rankedEntry) {
 
-        CalcController.summoner = summoner;
         CalcController.rankedEntry = rankedEntry;
-
+        CalcController.summoner = App.summoner;
         try {
             FXMLLoader l = new FXMLLoader(getClass().getResource("/fxml/viewMain.fxml"));
 

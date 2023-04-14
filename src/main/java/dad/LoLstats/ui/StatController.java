@@ -323,13 +323,13 @@ public class StatController implements Initializable {
 	@FXML
 	private void calcOnClick() {
 		if (Objects.isNull(App.calcScene))
-			App.calcScene = new Scene(new CalcController(summoner, rankedEntry).getView());
+			App.calcScene = new Scene(new CalcController(rankedEntry).getView());
 		else if (!this.summoner.equals(CalcController.getSummoner()))
-			App.calcScene = new Scene(new CalcController(summoner, rankedEntry).getView());
+			App.calcScene = new Scene(new CalcController(rankedEntry).getView());
 		if (Objects.isNull(App.statScene))
 			App.statScene = new Scene(this.getView());
 		App.stage.setScene(App.calcScene);
-		App.stage.setWidth(655);
+		App.stage.setWidth(690);
 		App.stage.setHeight(550);
 		App.stage.setResizable(false);
 		App.stage.show();
