@@ -17,12 +17,13 @@ public class App extends Application{
     public static String API_KEY;
     public static Summoner summoner;
     public static Scene loginScene, calcScene, statScene;
-
+    public static Image profilePic;
+    public static String gameVersion;
 
     @Override public void start(Stage stage) throws Exception {
         App.stage = stage;
         LoginController l = new LoginController();
-        stage.setTitle("LoLstats v1.0");
+        stage.setTitle("LoLstats v1.02");
         App.loginScene = new Scene(l.getView());
         stage.setScene(loginScene);
         stage.setWidth(800);

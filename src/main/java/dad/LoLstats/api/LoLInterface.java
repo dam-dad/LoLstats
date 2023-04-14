@@ -27,5 +27,7 @@ interface LoLInterface {
     @GET("league/v4/entries/by-summoner/{encryptedSummonerId}")
     public Call<ArrayList<LeagueEntry>> getElos(@Path("encryptedSummonerId") String summonerId, @Query("api_key") String API_KEY);
 
+    @GET("api/versions.json")
+    public Call<ArrayList<String>> getVersions();
 
 }

@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import dad.LoLstats.api.LeagueEntry;
+import dad.LoLstats.api.LoLService;
 import dad.LoLstats.api.MatchService;
 import dad.LoLstats.api.Player;
 import dad.LoLstats.api.Summoner;
@@ -170,9 +171,19 @@ public class StatController implements Initializable {
 		
 		logoutButton.setGraphic(new ImageView(
 			new Image(getClass().getResourceAsStream("/images/logout-icon.png"), 32, 32, true, true)));
-			
-		profilePicView.setImage(new Image(getClass()
-			.getResourceAsStream(String.format("/assets/profileicon/%s.png", summoner.getProfileIconId()))));
+		
+		try {
+			App.gameVersion = new LoLService().getLastVersion();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+ 		App.profilePic = new Image(String.format("http://ddragon.leagueoflegends.com/cdn/%s/img/profileicon/%s.png", App.gameVersion, summoner.getProfileIconId()));
+
+
+		profilePicView.setImage(App.profilePic);
 		
 		playerNameLabel.setText(summoner.getName());
 		playerLevelLabel.setText("Level " + summoner.getSummonerLevel());

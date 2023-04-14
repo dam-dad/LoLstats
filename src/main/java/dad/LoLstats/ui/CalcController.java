@@ -142,8 +142,7 @@ public class CalcController implements Initializable {
                 updateMessage("Procesando...");
 
                 try {
-                    profilePic.setImage(new Image(getClass().getResourceAsStream(
-                            String.format("/assets/profileIcon/%s.png", CalcController.summoner.getProfileIconId()))));
+                    profilePic.setImage(App.profilePic);
                     userAccountLabel.setText(summoner.getName());
                     eloIcon.setImage(new Image(getClass().getResourceAsStream(
                             String.format("/images/%s.png", rankedEntry.getTier().toLowerCase()))));
