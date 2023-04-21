@@ -2,6 +2,8 @@ package dad.LoLstats.api;
 
 import java.util.ArrayList;
 
+import dad.LoLstats.api.mastery.ChampionData;
+import dad.LoLstats.api.mastery.Mastery;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -29,5 +31,13 @@ interface LoLInterface {
 
     @GET("api/versions.json")
     public Call<ArrayList<String>> getVersions();
+
+    @GET("champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}")
+    public Call<ArrayList<Mastery>> getMasteries(@Path("encryptedSummonerId") String summonerId, @Query("api_key") String API_KEY);
+
+    @GET("cdn/{version}/data/{lang}/champion.json")
+    public Call<ChampionData> getChampionsData(@Path("version") String version, @Path("lang") String lang);
+
+    
 
 }

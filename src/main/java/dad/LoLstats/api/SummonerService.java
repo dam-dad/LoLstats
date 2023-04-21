@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import dad.LoLstats.api.mastery.ChampionData;
+import dad.LoLstats.api.mastery.Mastery;
 import retrofit2.Response;
 
 import okhttp3.ConnectionPool;
@@ -71,6 +73,18 @@ public class SummonerService {
         return elos;
     }
   
+    public ArrayList<Mastery> getMasteries(String summonerId) throws IOException{
+        Response<ArrayList<Mastery>> response = service
+                .getMasteries(summonerId, API_KEY)
+                .execute();
+        ArrayList<Mastery> masteries = response.body();
+        return masteries;
+    }
+
+    
+
+    
+
 	}
 
 

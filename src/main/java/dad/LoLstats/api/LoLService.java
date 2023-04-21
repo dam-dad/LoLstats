@@ -3,8 +3,7 @@ package dad.LoLstats.api;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import com.google.gson.Gson;
-
+import dad.LoLstats.api.mastery.ChampionData;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Response;
@@ -32,6 +31,14 @@ public class LoLService {
             service = retrofit.create(LoLInterface.class);
         }
 
+        public ChampionData getChampionsData(String version) throws Exception{
+            Response<ChampionData> response = service
+                    .getChampionsData(version,"en_GB")
+                    .execute();
+            ChampionData champions = response.body();
+            return champions;
+        }
+
     public ArrayList<String> getVersions() throws Exception{
 
         Response<ArrayList<String>> response = service
@@ -46,5 +53,7 @@ public class LoLService {
         ArrayList<String> versions = getVersions();
         return versions.get(0);
     }
+
+    
 }
 

@@ -20,6 +20,9 @@ import dad.LoLstats.api.LoLService;
 import dad.LoLstats.api.MatchService;
 import dad.LoLstats.api.Player;
 import dad.LoLstats.api.Summoner;
+import dad.LoLstats.api.SummonerService;
+import dad.LoLstats.api.mastery.Champion;
+import dad.LoLstats.api.mastery.Mastery;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -33,9 +36,16 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import net.sf.jasperreports.engine.JRException;
@@ -73,6 +83,9 @@ public class StatController implements Initializable {
 
 	@FXML
 	private VBox wBox;
+
+	@FXML
+	private Pane header;
 
 	private Summoner summoner;
 
@@ -182,6 +195,31 @@ public class StatController implements Initializable {
 
  		App.profilePic = new Image(String.format("http://ddragon.leagueoflegends.com/cdn/%s/img/profileicon/%s.png", App.gameVersion, summoner.getProfileIconId()));
 
+
+		//Get most played champ to show it
+		Map<String, Champion> champions;
+		Champion mostPlayed = null;
+		try {
+			champions = new LoLService().getChampionsData(App.gameVersion).getChampions();
+			System.out.println(summoner.getId());
+			ArrayList<Mastery> bestChamp = new SummonerService(App.API_KEY, App.region).getMasteries(summoner.getId());
+			for (Champion champion : champions.values()) {
+				if(champion.getKey().equals(bestChamp.get(0).getChampionId().toString())){
+					mostPlayed = champion;
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(mostPlayed.getName());
+		if(mostPlayed!=null)
+		{
+			
+			BackgroundImage b = new BackgroundImage(new Image(String.format("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/%s_0.jpg", mostPlayed.getName().replaceAll(" ", ""))), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,new BackgroundSize(50, 50, true, true, false, true));
+			header.setBackground(new Background(b));
+		}
 
 		profilePicView.setImage(App.profilePic);
 		

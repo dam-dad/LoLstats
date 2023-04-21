@@ -19,6 +19,7 @@ public class App extends Application{
     public static Scene loginScene, calcScene, statScene;
     public static Image profilePic;
     public static String gameVersion;
+    public static String region;
 
     @Override public void start(Stage stage) throws Exception {
         App.stage = stage;

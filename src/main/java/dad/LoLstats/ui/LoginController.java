@@ -77,7 +77,7 @@ public class LoginController implements Initializable{
         view.setCursor(new ImageCursor(new Image(getClass().getResourceAsStream("/cursors/normal.png"),128,128,true,true))); 
         BackgroundImage bImage = new BackgroundImage(new Image(getClass().getResourceAsStream("/images/Kaisa_0.jpg")), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         view.setBackground(new Background(bImage));
-        title.setFont(Font.loadFont(getClass().getResourceAsStream("/font/Friz Quadrata Regular.ttf"), 80));
+        title.setFont(Font.loadFont(getClass().getResourceAsStream("/font/Friz Quadrata Regular.ttf"), 100));
        
 
         //Preparing a server list
@@ -106,7 +106,7 @@ public class LoginController implements Initializable{
 
             //Setting up the summoner in app so it can be accessed anywhere
             App.summoner = summoner;
-            
+            App.region = region;
             //Getting the elos from the SummonerService and then swapping into StatScene.
             ArrayList<LeagueEntry> elos = summService.getElos(summoner.getId());
             
